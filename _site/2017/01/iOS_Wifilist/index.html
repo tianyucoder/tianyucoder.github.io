@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Wifi 定位原理及 iOS Wifi 列表获取</title>
+  <meta name="description" content="　　对于大家来说，Wifi 应该是一个很熟悉的词了，我们每天都可能在使用 Wifi 热点。Wifi 除了能给我们提供热点之外同时还有定位的作用， 现在移动设备的对用户的隐私保护是越来越严格了，就如定位功能，必须要经过设备用户的授权才能使用 Location 给这台设备定位。这些严格的隐私政策对用户起到到保护作用，...">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Wifi 定位原理及 iOS Wifi 列表获取">
+  <meta name="twitter:description" content="　　对于大家来说，Wifi 应该是一个很熟悉的词了，我们每天都可能在使用 Wifi 热点。Wifi 除了能给我们提供热点之外同时还有定位的作用， 现在移动设备的对用户的隐私保护是越来越严格了，就如定位功能，必须要经过设备用户的授权才能使用 Location 给这台设备定位。这些严格的隐私政策对用户起到到保护作用，...">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Wifi 定位原理及 iOS Wifi 列表获取">
+  <meta property="og:description" content="　　对于大家来说，Wifi 应该是一个很熟悉的词了，我们每天都可能在使用 Wifi 热点。Wifi 除了能给我们提供热点之外同时还有定位的作用， 现在移动设备的对用户的隐私保护是越来越严格了，就如定位功能，必须要经过设备用户的授权才能使用 Location 给这台设备定位。这些严格的隐私政策对用户起到到保护作用，...">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://baixin.io/2017/01/iOS_Wifilist/">
+  <link rel="alternate" type="application/rss+xml" title="潘柏信" href="http://baixin.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?8ba1c6be0953b6f9c2ba38e57f615421";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-84134159-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 潘柏信 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                leopardpan
+                            
+                        </h2>
+                        <p>
+                           
+                                iOS / 机器学习
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 潘柏信" class="blog-button">潘柏信</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Wifi 定位原理及 iOS Wifi 列表获取</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2017-01-03 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-01-03</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <p>　　对于大家来说，Wifi 应该是一个很熟悉的词了，我们每天都可能在使用 Wifi 热点。Wifi 除了能给我们提供热点之外同时还有定位的作用， 现在移动设备的对用户的隐私保护是越来越严格了，就如定位功能，必须要经过设备用户的授权才能使用 Location 给这台设备定位。这些严格的隐私政策对用户起到到保护作用，但对开发人员却是一种阻碍，在产品强需求的情况下用户是会授权的，如地图类应用，但是另外一些没有对定位强需求的产品，用户可能就不会给你授权了，这是我们可以考虑下 Wifi 定位了。</p>
+
+<h3 id="wifi-">Wifi 定位原理</h3>
+
+<p>　　当我们使用手机扫面 Wifi 的时候，其实就可以定位到这台手机的位置信息了。每个 Wifi 路由开启后，都会不停的往四周发射信号，我们把 Wifi 路由想象成太阳以某种频度不停的往周围发射电磁波，电磁波会因距离的削弱，同时也会因为物体阻挡而削弱。例子就是我们在离 Wifi 路由器同样远的位置，有些地方信号强度高有些地方信号强度低。路由同时也叫 Wifi 热点（或者 Wifi AP：Access Point）。每一个 Wifi 路由器都会有一个 BSSID，很多人都管这个 BSSID 叫 MAC 地址（其实 BSSID 并不是 MAC 地址），BSSID 设定了一般就不会在变也不会重复，也就意味着是全球唯一的，这是路由制造的规则，既然有规则那么就会有不遵守规则的人，文章结尾会介绍不遵守规则的人是如何害人害己的。</p>
+
+<p>　　刚才提到的 BSSID，在 Wifi 路由器的发射中是可以检测到的，同时 Wifi 路由信号还伴随着，SSID(路由器的名称：如XX的Wifi)、signalStrength（手机接收到Wifi的信号强度）及其它信息。看到这里你应该知道如何使用Wifi定位的了，条件：唯一不变的BSSID 和 手机到路由器的信号强度。思路：Wifi 信号是有范围的，我们假设这个范围就是10米为半径的一个圆(实际情况根据Wifi路由厂商和路由器周围环境而定)，我们去采集一些Wifi热点回来，某家水果店的 Wifi、某家餐馆的 Wifi 等等，我们自己去采集的我们肯定知道他们的具体位置，及刚才提到的 Wifi 中的信息：BSSID、SSID、signalStrength，再把他们存入数据库，采集的人可以很多：专业采集人员、出租车司机、快递员等等，他们经常穿梭于大街小巷，其实我们每个人都是Wifi数据库的采集人员，我们的手机厂商每天都在默默的采集着我们的位置信息，iPhone手机系统设置里就可以看到你今天去哪了，你的Wifi连接过哪些设备也是知道的。时间越久Wifi数据库信息越丰富，最终会发现每个BSSID会对应多个SSID和signalStrength，因为SSID是可以修改的，signalStrength是由于在这个Wifi热点的周围不同位置采集的，所以信号强度也不同。采集的信号强度越多，给BSSID也就是这个Wifi热点的定位就越精准。</p>
+
+<p>　　现在如果我去一个陌生的地方，我打开手机扫描周围的 Wifi 刚好扫描到了一个或几个，我把这个 Wifi 信息（BSSID）传给服务器，服务器通过这个 BSSID 去数据库查找，就能直接匹配到对应的位置，返回给我。如果匹配不到则表示这里没人来采集过 Wifi 信息，或者是这个 Wifi 热点是最近布置的，采集人员还没来得及采集。服务器可以把这些未采集到的先分类后期统一规划。</p>
+
+<p>　　Wifi 定位整体功能是需要服务端来配合的，也就表示必须要有网络环境才行。其实移动端(手机、Pad等)也可以独立完成，不过对技术和设备硬件要求会高很多，全球的 Wifi 热点是一个很庞大的数据量，需要经过高精度的无损压缩后放在内存很大的手机里才行，或许多年以后可以实现吧(即使技术上能实现了，对于产品和研发来说收益、风险、和工作量又是一场PK)</p>
+
+<h3 id="ios--wifi-">iOS 申请获取 Wifi 列表权限</h3>
+
+<p>　　知道了原理有啥用呢，能实现么？好吧现在就遇到问题了，移动设备如今主要是 Andorid 和 iOS, Android 上可以直接扫描 Wifi 列表获取相关信息，自己去网上找找, 所以说会原理不一定会技术实现，我也就只能讲讲 iOS 的技术实现了。              <br />
+　　iOS 上获取 Wifi 列表其实也有很大限制，在 iOS 9 以前是不能获取Wifi列表的，只能获取当前连接的 Wifi 信息，也就表示只有连接了 Wifi 才能定位，刚才文章说到的场景是，我在一个陌生的原理，拿出手机扫描 Wifi ，也就是我并没连接那里的 Wifi（我不知道密码我怎么连啊）。Apple 在 iOS 9 以后，提供了获取Wifi列表的API，但是获取Wifi列表是有门槛的，主要步骤有：</p>
+
+<blockquote>
+  <ul>
+    <li>1、向 Apple 申请开发 Network Extension 权限</li>
+    <li>2、申请包含 Network Extension 的描述文件</li>
+    <li>3、配置 Info.plist</li>
+    <li>4、配置 entitlements</li>
+    <li>5、iOS 获取 Wifi 列表代码实现</li>
+    <li>6、获取Wifi列表回调</li>
+  </ul>
+</blockquote>
+
+<h3 id="apple--network-extension-">1、向 Apple 申请开发 Network Extension 权限</h3>
+
+<p>　　首先要先写封邮件给 <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#101;&#120;&#116;&#101;&#110;&#115;&#105;&#111;&#110;&#064;&#097;&#112;&#112;&#108;&#101;&#046;&#099;&#111;&#109;">&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#101;&#120;&#116;&#101;&#110;&#115;&#105;&#111;&#110;&#064;&#097;&#112;&#112;&#108;&#101;&#046;&#099;&#111;&#109;</a> ，问苹果要开发 Network Extension 的权限。   <br />
+苹果收到邮件后会自动回复邮件，在 <a href="https://developer.apple.com/contact/network-extension/">https://developer.apple.com/contact/network-extension/</a> 里面填写申请表格，内容包括：</p>
+
+<p>```
+Organization：</p>
+
+<p>Company / Product URL:</p>
+
+<p>What’s your product’s target market?</p>
+
+<p>What’s your company’s primary function?</p>
+
+<p>Describe your application and how it will use the Network Extension framework.</p>
+
+<p>What type of entitlement are you requesting?</p>
+
+<p>。。。
+```</p>
+
+<p>申请后大概两周左右能收到 Aplle的 确认信，如：</p>
+
+<p>```
+Hi,</p>
+
+<p>Thanks for your interest in the Network Extension APIs.</p>
+
+<p>We added a new template containing the Network Extension entitlements to your team.</p>
+
+<p>。。。。
+```</p>
+
+<h3 id="network-extension-">2、申请包含 Network Extension 的描述文件</h3>
+
+<p><img src="/images/posts/Wifilist/PastedGraphic.png" alt="" /></p>
+
+<p>选择包含 Network Extension 的描述文件，后点击下载，下载完成双击描述文件。</p>
+
+<h3 id="infoplist">3、配置 Info.plist</h3>
+
+<p>Xcode Info.plist 里 Required background modes 添加 一个 network-authentication(item)</p>
+
+<p><img src="/images/posts/Wifilist/infoplist.png" alt="" /></p>
+
+<h3 id="entitlements">4、配置 entitlements</h3>
+
+<p>Demo.entitlements（Demo是项目名称） 里添加 Key-Value: com.apple.developer.networking.HotspotHelper -&gt; YES</p>
+
+<p><img src="/images/posts/Wifilist/entitlement.png" alt="" /></p>
+
+<h3 id="ios--wifi--1">5、iOS 获取 Wifi 列表代码实现</h3>
+
+<p>导入头文件</p>
+
+<p><code class="highlighter-rouge">
+#import &lt;NetworkExtension/NetworkExtension.h&gt;  
+</code></p>
+
+<p>代码实现</p>
+
+<p>```              <br />
+- (void)getWifiList {</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (![[[UIDevice currentDevice] systemVersion] floatValue] &gt;= 9.0) {return;}
+dispatch_queue_t queue = dispatch_queue_create("com.leopardpan.HotspotHelper", 0);
+[NEHotspotHelper registerWithOptions:nil queue:queue handler: ^(NEHotspotHelperCommand * cmd) {
+	if(cmd.commandType == kNEHotspotHelperCommandTypeFilterScanList) {
+		for (NEHotspotNetwork* network  in cmd.networkList) {
+			NSLog(@"network.SSID = %@",network.SSID);
+		}
+	}
+}]; } ``` kNEHotspotHelperCommandTypeFilterScanList： 表示扫描到 Wifi 列表信息。
+</code></pre>
+</div>
+
+<p>NEHotspotNetwork 里有如下信息：</p>
+
+<blockquote>
+  <ul>
+    <li>SSID：Wifi 名称</li>
+    <li>BSSID：站点的 MAC 地址</li>
+    <li>signalStrength： Wifi信号强度，该值在0.0-1.0之间</li>
+    <li>secure：网络是否安全 (不需要密码的 Wifi，该值为 false)</li>
+    <li>autoJoined： 设备是否自动连接该 Wifi，目前测试自动连接以前连过的 Wifi 的也为 false 。</li>
+    <li>justJoined：网络是否刚刚加入</li>
+    <li>chosenHelper：HotspotHelper是否为网络的所选助手</li>
+  </ul>
+</blockquote>
+
+<p><a href="https://developer.apple.com/reference/networkextension/nehotspotnetwork">官方文档连接</a></p>
+
+<h3 id="wifi">6、获取Wifi列表回调</h3>
+
+<p>当你把上面的代码写完，并成功运行项目后，发现并没有Wifi列表的回调。因为你还没刷新Wifi列表，你需要：</p>
+
+<ul>
+  <li>打开手机系统设置 -&gt; WLAN -&gt; 系统 Wifi 列表加载出来时，上面代码部分才会回调，才能获取到 Wifi 列表。</li>
+</ul>
+
+<p><img src="/images/posts/Wifilist/WLAN.png" height="360" width="200" /></p>
+
+<p>这个时候你就能看到控制台源源不断的Log。</p>
+
+<h3 id="section">注意事项</h3>
+
+<ul>
+  <li>1、获取Wifi列表功能由于是需要申请后台权限，所以能后台激活App(应用程序)，而且激活后App的进程能存活几个小时。</li>
+  <li>2、整个获取Wifi列表不需要App用户授权，也就是在App用户无感知下获取设备的Wifi列表信息，使用时请正当使用。</li>
+  <li>3、Wifi列表获取 NetworkExtension 是 iOS 9以后才出的，目前 iOS 9 已经覆盖很广了。</li>
+</ul>
+
+<p>下面付一张来自 <a href="https://www.talkingdata.com/index/#/device/os/zh_CN">TalkingData 对iOS操作系统的统计报表</a>，时间：2017-01-03</p>
+
+<p><img src="/images/posts/Wifilist/systemVersion.png" height="280" width="600" /></p>
+
+<h3 id="qa">Q&amp;A</h3>
+
+<p>在操作过程或者文章有问题的话欢迎在 <a href="http://baixin.io/2017/01/iOS_Wifilist/">原文</a> 里提问或指正。</p>
+
+<blockquote>
+  <ul>
+    <li>使用 Demo 我就不提供了，你如果没有申请 NetworkExtension 权限，提供了 Demo 你也无法使用。</li>
+  </ul>
+</blockquote>
+
+<p><br /></p>
+
+<p>参考资源：<a href="http://stackoverflow.com/questions/31704292/nehotspothelper-networkextension-api-ios9-0">NEHotspotHelper NetworkExtension API iOS9.0</a></p>
+
+<p><br />
+转载请注明：<a href="http://baixin">潘柏信的博客</a> » <a href="http://baixin.io/2017/01/iOS_Wifilist/">Wifi 定位原理及 iOS Wifi 列表获取</a></p>
+
+
+
+  </section>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2016/12/iOS_Dev_Note/" data-toggle="tooltip" data-placement="top" title="iOS开发中的小问题记录">上一篇：  <span>iOS开发中的小问题记录</span>
+            </a>
+        </li>
+        
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+
+
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "aa395cf7778f458492060f3f53301b7c",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
+
+
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; 潘柏信 2017 Theme by <a href="http://baixin.io/">leopardpan</a> |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Jekyll搭建个人博客</title>
+  <meta name="description" content="　之前写了一篇HEXO搭建个人博客的教程获得了很好评，尤其是在简书上目前已经累积了10W+的阅读量了，也有好心的读者主动给我打赏，在此感谢。">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Jekyll搭建个人博客">
+  <meta name="twitter:description" content="　之前写了一篇HEXO搭建个人博客的教程获得了很好评，尤其是在简书上目前已经累积了10W+的阅读量了，也有好心的读者主动给我打赏，在此感谢。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jekyll搭建个人博客">
+  <meta property="og:description" content="　之前写了一篇HEXO搭建个人博客的教程获得了很好评，尤其是在简书上目前已经累积了10W+的阅读量了，也有好心的读者主动给我打赏，在此感谢。">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://baixin.io/2016/10/jekyll_tutorials1/">
+  <link rel="alternate" type="application/rss+xml" title="潘柏信" href="http://baixin.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?8ba1c6be0953b6f9c2ba38e57f615421";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-84134159-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 潘柏信 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                leopardpan
+                            
+                        </h2>
+                        <p>
+                           
+                                iOS / 机器学习
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 潘柏信" class="blog-button">潘柏信</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Jekyll搭建个人博客</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2016-10-14 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-10-14</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <p>　之前写了一篇<a href="http://baixin.io/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">HEXO搭建个人博客</a>的教程获得了很好评，尤其是在<a href="http://www.jianshu.com/p/465830080ea9">简书</a>上目前已经累积了10W+的阅读量了，也有好心的读者主动给我打赏，在此感谢。</p>
+
+<p>　如果你看过我的文章会发现我现在的博客样式跟之前是有很大的区别的，之前我也是使用 HEXO 搭建的博客，后来发现使用 HEXO 在多台电脑上发布博客，操作起来并不是那么方便，果断就转到了 Jekyll 上，接下来我会讲如何使用 Jekyll 搭建博客，<a href="http://baixin.io/#blog">博客模板效果</a>。</p>
+
+<h3 id="section">介绍</h3>
+
+<p>　Jekyll 是一个简单的博客形态的静态站点生产机器。它有一个模版目录，其中包含原始文本格式的文档，通过 Markdown （或者 Textile） 以及 Liquid 转化成一个完整的可发布的静态网站，你可以发布在任何你喜爱的服务器上。Jekyll 也可以运行在 GitHub Page 上，也就是说，你可以使用 GitHub 的服务来搭建你的项目页面、博客或者网站，而且是完全免费的</p>
+
+<p>　使用 Jekyll 搭建博客之前要确认下本机环境，Git 环境（用于部署到远端）、<a href="http://www.ruby-lang.org/en/downloads/">Ruby</a> 环境（Jekyll 是基于 Ruby 开发的）、包管理器 <a href="http://rubygems.org/pages/download">RubyGems</a>              <br />
+　　如果你是 Mac 用户，你就需要安装 Xcode 和 Command-Line Tools了。下载方式 Preferences → Downloads → Components。</p>
+
+<p>　　Jekyll 是一个免费的简单静态网页生成工具，可以配合第三方服务例如： Disqus（评论）、多说(评论) 以及分享 等等扩展功能，Jekyll 可以直接部署在 Github（国外） 或 Coding（国内） 上，可以绑定自己的域名。<a href="http://jekyll.bootcss.com/">Jekyll中文文档</a>、<a href="https://jekyllrb.com/">Jekyll英文文档</a>、<a href="http://jekyllthemes.org/">Jekyll主题列表</a>。</p>
+
+<h3 id="jekyll-">Jekyll 环境配置</h3>
+
+<p>安装 jekyll</p>
+
+<p><code class="highlighter-rouge">    
+$ gem install jekyll     
+</code></p>
+
+<p>创建博客</p>
+
+<p><code class="highlighter-rouge">   
+$ jekyll new myBlog    
+</code></p>
+
+<p>进入博客目录</p>
+
+<p><code class="highlighter-rouge">
+$ cd myBlog  
+</code></p>
+
+<p>启动本地服务</p>
+
+<p><code class="highlighter-rouge">
+$ jekyll serve
+</code></p>
+
+<p>在浏览器里输入： <a href="http://localhost:4000">http://localhost:4000</a>，就可以看到你的博客效果了。</p>
+
+<p><img src="/images/posts/jekyll/image1.png" alt="" /></p>
+
+<p>so easy !</p>
+
+<h3 id="section-1">目录结构</h3>
+<p>　
+　Jekyll 的核心其实是一个文本转换引擎。它的概念其实就是： 你用你最喜欢的标记语言来写文章，可以是 Markdown，也可以是 Textile,或者就是简单的 HTML, 然后 Jekyll 就会帮你套入一个或一系列的布局中。在整个过程中你可以设置URL路径, 你的文本在布局中的显示样式等等。这些都可以通过纯文本编辑来实现，最终生成的静态页面就是你的成品了。</p>
+
+<p>一个基本的 Jekyll 网站的目录结构一般是像这样的：</p>
+
+<p>```
+.
+├── _config.yml
+├── _includes
+|   ├── footer.html
+|   └── header.html
+├── _layouts
+|   ├── default.html
+|   ├── post.html
+|   └── page.html
+├── _posts
+|   └── 2016-10-08-welcome-to-jekyll.markdown
+├── _sass
+|   ├── _base.scss
+|   ├── _layout.scss
+|   └── _syntax-highlighting.scss
+├── about.md
+├── css
+|   └── main.scss
+├── feed.xml
+└── index.html</p>
+
+<p>```</p>
+
+<p>这些目录结构以及具体的作用可以参考 <a href="http://jekyll.com.cn/docs/structure/">官网文档</a></p>
+
+<p>进入 _config.yml 里面，修改成你想看到的信息，重新 jekyll server ，刷新浏览器就可以看到你刚刚修改的信息了。</p>
+
+<p>到此，博客初步搭建算是完成了，</p>
+
+<h3 id="section-2">博客部署到远端</h3>
+
+<p>　我这里讲的是部署到 Github Page 创建一个 github 账号，然后创建一个跟你账户名一样的仓库，如我的 github 账户名叫 <a href="https://github.com/leopardpan">leopardpan</a>，我的 github 仓库名就叫 <a href="https://github.com/leopardpan/leopardpan.github.io">leopardpan.github.io</a>，创建好了之后，把刚才建立的 myBlog 项目 push 到 username.github.io仓库里去（username指的是你的github用户名），检查你远端仓库已经跟你本地 myBlog 同步了，然后你在浏览器里输入 username.github.io ，就可以访问你的博客了。</p>
+
+<h3 id="section-3">编写文章</h3>
+
+<p>　　所有的文章都是 _posts 目录下面，文章格式为 mardown 格式，文章文件名可以是 .mardown 或者 .md。</p>
+
+<p>　　编写一篇新文章很简单，你可以直接从 _posts/ 目录下复制一份出来 <code class="highlighter-rouge">2016-10-16-welcome-to-jekyll副本.markdown</code> ，修改名字为 2016-10-16-article1.markdown ，注意：文章名的格式前面必须为 2016-10-16- ，日期可以修改，但必须为 年-月-日- 格式，后面的 article1 是整个文章的连接 URL，如果文章名为中文，那么文章的连接URL就会变成这样的：http://baixin.io/2015/08/%E6%90%AD%E5/ ， 所以建议文章名最好是英文的或者阿拉伯数字。 双击 2016-10-16-article1.markdown 打开</p>
+
+<p>```</p>
+
+<hr />
+<p>layout: post
+title:  “Welcome to Jekyll!”
+date:   2016-10-16 11:29:08 +0800
+categories: jekyll update
+—</p>
+
+<p>正文…</p>
+
+<p>```</p>
+
+<p>title: 显示的文章名， 如：title: 我的第一篇文章                  <br />
+date:  显示的文章发布日期，如：date: 2016-10-16                        <br />
+categories: tag标签的分类，如：categories: 随笔</p>
+
+<p>注意：文章头部格式必须为上面的，…. 就是文章的正文内容。</p>
+
+<p>我写文章使用的是 Sublime Text2 编辑器，如果你对 markdown 语法不熟悉的话，可以看看<a href="https://www.zybuluo.com/">作业部落的教程</a></p>
+
+<h3 id="section-4">使用我的博客模板</h3>
+
+<p>虽然博客部署完成了，你会发现博客太简单不是你想要的，如果你喜欢我的模板的话，可以使用我的模板。</p>
+
+<p>首先你要获取的我博客，<a href="https://github.com/leopardpan/leopardpan.github.io.git">Github项目地址</a>，你可以直接<a href="https://github.com/leopardpan/leopardpan.github.io/archive/master.zip">点击下载博客</a>，进去leopardpan.github.io/ 目录下， 使用命令部署本地服务</p>
+
+<p><code class="highlighter-rouge">
+$ jekyll server   
+</code></p>
+
+<h3 id="jekyll">如果你本机没配置过任何jekyll的环境，可能会报错</h3>
+
+<p>```
+/Users/xxxxxxxx/.rvm/rubies/ruby-2.2.2/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in <code class="highlighter-rouge">require': cannot load such file -- bundler (LoadError)
+	from /Users/xxxxxxxx/.rvm/rubies/ruby-2.2.2/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in </code>require’
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/gems/jekyll-3.3.0/lib/jekyll/plugin_manager.rb:34:in <code class="highlighter-rouge">require_from_bundler'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/gems/jekyll-3.3.0/exe/jekyll:9:in </code>&lt;top (required)&gt;’
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/jekyll:23:in <code class="highlighter-rouge">load'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/jekyll:23:in </code><main>'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/ruby_executable_hooks:15:in `eval'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/ruby_executable_hooks:15:in `<main>'</main></main></p>
+
+<p>```</p>
+
+<p>原因： 没有安装 bundler ，执行安装 bundler 命令</p>
+
+<p>```</p>
+
+<p>$ gem install bundler</p>
+
+<p>```</p>
+
+<p>提示：</p>
+
+<p>```
+Fetching: bundler-1.13.5.gem (100%)
+Successfully installed bundler-1.13.5
+Parsing documentation for bundler-1.13.5
+Installing ri documentation for bundler-1.13.5
+Done installing documentation for bundler after 5 seconds
+1 gem installed</p>
+
+<p>```</p>
+
+<p>再次执行 $ jekyll server  ，提示</p>
+
+<p>```</p>
+
+<p>Could not find proper version of jekyll (3.1.1) in any of the sources
+Run <code class="highlighter-rouge">bundle install</code> to install missing gems.</p>
+
+<p>```</p>
+
+<p>跟着提示运行命令</p>
+
+<p><code class="highlighter-rouge">
+$ bundle install
+</code></p>
+
+<p>这个时候你可能会发现 bundle install 运行卡主不动了。</p>
+
+<p>如果很长时间都没任何提示的话，你可以尝试修改 gem 的 source</p>
+
+<p>```
+$ gem sources –remove https://rubygems.org/
+$ gem sources -a http://ruby.taobao.org/
+$ gem sources -l
+<em>** CURRENT SOURCES **</em></p>
+
+<p>http://ruby.taobao.org</p>
+
+<p>```</p>
+
+<p>再次执行命令 $ bundle install，发现开始有动静了</p>
+
+<p>```
+Fetching gem metadata from https://rubygems.org/………..
+Fetching version metadata from https://rubygems.org/..
+Fetching dependency metadata from https://rubygems.org/.
+。。。
+Installing jekyll-watch 1.3.1
+Installing jekyll 3.1.1
+Bundle complete! 3 Gemfile dependencies, 17 gems now installed.
+Use <code class="highlighter-rouge">bundle show [gemname]</code> to see where a bundled gem is installed.</p>
+
+<p>```</p>
+
+<p>bundler安装完成，后再次启动本地服务</p>
+
+<p>```
+$ jekyll server</p>
+
+<p>```</p>
+
+<p>继续报错</p>
+
+<p>```
+Configuration file: /Users/tendcloud-Caroline/Desktop/leopardpan.github.io/_config.yml
+  Dependency Error: Yikes! It looks like you don’t have jekyll-sitemap or one of its dependencies installed. In order to use Jekyll as currently configured, you’ll need to install this gem. The full error message from Ruby is: ‘cannot load such file – jekyll-sitemap’ If you run into trouble, you can find helpful resources at http://jekyllrb.com/help/! 
+jekyll 3.1.1 | Error:  jekyll-sitemap</p>
+
+<p>```
+表示 当前的 jekyll 版本是 3.1.1 ，无法使用 jekyll-sitemap</p>
+
+<p>解决方法有两个</p>
+
+<blockquote>
+  <p>1、打开当前目录下的 _config.yml 文件，把 gems: [jekyll-paginate,jekyll-sitemap] 换成 gems: [jekyll-paginate] ，也就是去掉jekyll-sitemap。</p>
+</blockquote>
+
+<blockquote>
+  <p>2、升级 jekyll 版本，我当前的是 jekyll 3.1.2 。</p>
+</blockquote>
+
+<p>修改完成后保存配置，再次执行</p>
+
+<p>```
+$ jekyll server</p>
+
+<p>```
+提示</p>
+
+<p>```
+Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github/_config.yml
+            Source: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github
+       Destination: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github/_site
+ Incremental build: disabled. Enable with –incremental
+      Generating… 
+                    done in 0.901 seconds.
+ Auto-regeneration: enabled for ‘/Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github’
+Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github/_config.yml
+    Server address: http://127.0.0.1:4000/
+  Server running… press ctrl-c to stop.</p>
+
+<p>```</p>
+
+<p>表示本地服务部署成功。</p>
+
+<p>在浏览器输入 <a href="127.0.0.1:4000">127.0.0.1:4000</a> ， 就可以看到<a href="http://baixin.io">baixin.io</a>博客效果了。</p>
+
+<h3 id="section-5">修改成你自己的博客</h3>
+
+<blockquote>
+  <ul>
+    <li>如果你想使用我的模板请把 _posts/ 目录下的文章都去掉。</li>
+    <li>修改 _config.yml 文件里面的内容为你自己的。</li>
+  </ul>
+</blockquote>
+
+<p>然后使用 git push 到你自己的仓库里面去，检查你远端仓库，在浏览器输入 username.github.io 就会发现，你有一个漂亮的主题模板了。</p>
+
+<h4 id="section-6">【 如果想修改博客样式却不知道怎么修改，可以直接在评论里给我提问 】</h4>
+
+<h3 id="jekyll-1">为什么要是用 Jekyll</h3>
+
+<p>使用了 Jekyll 你会发现如果你想使用多台电脑发博客都很方便，只要把远端 github 仓库里的博客 clone 下来，写文章后再提交就可以了，Hexo 由于远端提交的是静态网页，所有无法直接写 Markdown 的文章。如果你想看 Hexo 搭建博客，可以看看我的另一篇<a href="http://baixin.io/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">HEXO搭建个人博客</a>的教程。</p>
+
+<p>如果你在搭建博客遇到问题，可以在<a href="http://baixin.io/2016/10/jekyll_tutorials1/">原文博客</a>的评论里给我提问。</p>
+
+<p>后面会继续介绍，在我的博客基础上，如何修改成你自己喜欢的 Style，欢迎继续关注我博客的更新。</p>
+
+<h3 id="qa">Q&amp;A</h3>
+
+<blockquote>
+  <p>问题：最近很多朋友使用我的模板报警告：The CNAME <code class="highlighter-rouge">baixin.io</code> is already taken 
+解决：把CNAME里面的baixin.io修改成你自己的域名，如果你暂时没有域名，CNAME里面就什么都不用谢。（之前没人反馈过这个问题，应该是github page最近才最的限制。）</p>
+</blockquote>
+
+
+
+  </section>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2016/09/iOSLowerLeftAppicon/" data-toggle="tooltip" data-placement="top" title="iOS设备左下角出现Appicon">上一篇：  <span>iOS设备左下角出现Appicon</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2016/10/Xcode8/" data-toggle="tooltip" data-placement="top" title="Xcode 8 使用笔记">下一篇：  <span>Xcode 8 使用笔记</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+
+
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "aa395cf7778f458492060f3f53301b7c",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
+
+
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; 潘柏信 2017 Theme by <a href="http://baixin.io/">leopardpan</a> |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

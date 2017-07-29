@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>使用 TensorFlow 实现神经网络</title>
+  <meta name="description" content="介绍">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="使用 TensorFlow 实现神经网络">
+  <meta name="twitter:description" content="介绍">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="使用 TensorFlow 实现神经网络">
+  <meta property="og:description" content="介绍">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://baixin.io/2016/11/neural_networks_using_TensorFlow/">
+  <link rel="alternate" type="application/rss+xml" title="潘柏信" href="http://baixin.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?8ba1c6be0953b6f9c2ba38e57f615421";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-84134159-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 潘柏信 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                leopardpan
+                            
+                        </h2>
+                        <p>
+                           
+                                iOS / 机器学习
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 潘柏信" class="blog-button">潘柏信</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">使用 TensorFlow 实现神经网络</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2016-11-20 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-11-20</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <h2 id="section">介绍</h2>
+
+<p>　　一直关注 <code class="highlighter-rouge">数据科学</code> 、 <code class="highlighter-rouge">机器学习</code> 的同学，一定会经常看到或听到关于 <code class="highlighter-rouge">深度学习</code> 和 <code class="highlighter-rouge">神经网络</code> 相关信息。如果你对 <code class="highlighter-rouge">深度学习</code> 感兴趣，但却还没有实际动手操作过，你可以从这里得到实践。</p>
+
+<p>　　在本文中，我将介绍 <code class="highlighter-rouge">TensorFlow</code> , 帮你了解 <code class="highlighter-rouge">神经网络</code> 的实际作用，并使用 <code class="highlighter-rouge">TensorFlow</code> 来解决现实生活中的问题。 读这篇文章前，需要知道 <code class="highlighter-rouge">神经网络</code> 的基础知识和一些熟悉编程理念，文章中的代码是使用 <code class="highlighter-rouge">Pyhton</code> 编写的，所以还需要了解一些 <code class="highlighter-rouge">Python</code> 的基本语法，才能更有利对于文章的理解。</p>
+
+<div align="center">
+	<img src="/images/posts/tfimg/logo.jpg" height="300" width="500" />  
+</div>
+
+<h3 id="section-1">目录</h3>
+
+<ul>
+  <li><a href="#When-to-apply-neural-net">什么时候应用神经网络？</a></li>
+  <li><a href="#solve-problems">通常神经网络能解决的问题</a></li>
+  <li><a href="#popular-libraries">了解图像数据和主流的库来解决问题</a></li>
+  <li><a href="#What-is-TensorFlow">什么是 TensorFlow？</a></li>
+  <li><a href="#A-typical-flow">TensorFlow 一个 典型 的 “ 流 ”</a></li>
+  <li><a href="#MLP">在 TensorFlow 中实现 MLP</a></li>
+  <li><a href="#Limitations-of-TensorFlow">TensorFlow 的限制</a></li>
+  <li><a href="#vs-libraries">TensorFlow 与其他库</a></li>
+  <li><a href="#Where-to-go-from-here">从这里去哪里？</a></li>
+</ul>
+
+<h3 id="a-namewhen-to-apply-neural-neta"><a name="When-to-apply-neural-net"></a>什么时候用神经网络？</h3>
+
+<p>　　<code class="highlighter-rouge">神经网络</code> 已经在相当一段时间成为机器学习中的焦点。 对于 <code class="highlighter-rouge">神经网络</code> 和 <code class="highlighter-rouge">深度学习</code> 上这里有更详细的解释 <a href="https://www.analyticsvidhya.com/blog/2016/08/evolution-core-concepts-deep-learning-neural-networks/">点击阅读</a> 。 其 “更深” 的功能在许多领域都有取得巨大的突破，如图像识别，语音和自然语言处理等。</p>
+
+<p>　　主要的问题在于如何用好 <code class="highlighter-rouge">神经网络</code> ？现在，每天都会有许多新发现，这个领域就像一个金矿，为了成为这个 “淘金热” 的一部分，必须记住几件事：</p>
+
+<ul>
+  <li>
+    <p><strong>首先，<code class="highlighter-rouge">神经网络</code> 需要有明确和翔实的数据（主要是大数据）训练</strong>， 试着想象 <code class="highlighter-rouge">神经网络</code> 作为一个孩子，它一开始会观察它父母走路，然后它试图自己走，每一步就像学习执行一个特定的任务。 它可能会失败几次，但经过几次失败的尝试，它将会如何走路。所以需要为孩子提供更多的机会，如果不让它走，它可能永远不会学习如何走路。</p>
+  </li>
+  <li>
+    <p><strong>一些人会利用 <code class="highlighter-rouge">神经网络</code> 解决复杂的问题，如图像处理，</strong>  <code class="highlighter-rouge">神经网络</code> 属于一类代表学习的算法，这些算法可以把复杂的问题分解为简单的形式，使他们成为可以理解的（或 “可表示”），就像吞咽食物之前的咀嚼，让我们更容易吸收和消化。这个分解的过程如果使用传统的算法来实现也可以，但是实现过程将会很困难。</p>
+  </li>
+  <li>
+    <p><strong>选择适当类型的 <code class="highlighter-rouge">神经网络</code> ，来解决问题，</strong>  每个问题的复杂情况都不一样，所以数据决定你解决问题的方式。 例如，如果问题是序列生成的问题，<code class="highlighter-rouge">递归神经网络</code> 更合适。如果它是图像相关的问题，想更好地解决可以采取 <code class="highlighter-rouge">卷积神经网络</code>。</p>
+  </li>
+  <li>
+    <p><strong>最后最重要的就是 <code class="highlighter-rouge">硬件</code> 要求了，硬件是运行 <code class="highlighter-rouge">神经网络</code> 模型的关键。</strong> 神经网被 “发现” 很久以前，他们在近年来得到推崇的主要的原因就是计算资源更好，能更大发挥它的光芒，如果你想使用 <code class="highlighter-rouge">神经网络</code> 解决这些现实生活中的问题，那么你得准备购买一些高端的硬件了😆！</p>
+  </li>
+</ul>
+
+<h3 id="a-namesolve-problemsa"><a name="solve-problems"></a>通常神经网络解决的问题</h3>
+
+<p>　　神经网络是一种特殊类型的 机器学习（ML）算法。 因此，作为每个 ML 算法都遵循 数据预处理 、模型建立 和 模型评估 的工作流流程。为了简明起见，下面列出了如何处理 <code class="highlighter-rouge">神经网络</code> 问题的 TODO 列表。</p>
+
+<ul>
+  <li>检查它是否为 神经网络 ，把它看成一个传统的算法问题</li>
+  <li>做一个调查，哪个 神经网络 框架最适合解决这个问题</li>
+  <li>定义 神经网络 框架，通过它选择对应的 编程语言 和 库</li>
+  <li>将数据转换为正确的格式并分批分割</li>
+  <li>根据您的需要预处理数据</li>
+  <li>增强数据以增加大小并制作更好的训练模型</li>
+  <li>批次供给到 神经网络</li>
+  <li>训练和监测，培训和验证数据集的变化</li>
+  <li>测试你的模型，并保存以备将来使用</li>
+</ul>
+
+<p>　　本文将专注于图像数据，我们从 TensorFlow 入手。</p>
+
+<h3 id="a-namepopular-librariesa"><a name="popular-libraries"></a>了解图像数据和主流的库来解决问题</h3>
+
+<p>　　图像大多排列为 3-D 阵列，具体指 高度、宽度 和 颜色通道。例如，如果你使用电脑截屏，它将首先转换成一个 3-D 数组，然后压缩它为 ‘.jpeg’ 或 ‘.png’ 文件格式。</p>
+
+<p>　　虽然这些图像对于人类来说很容易理解，但计算机很难理解它们。 这种现象称为“语义空隙”。我们的大脑可以看看图像，并在几秒钟内读懂完整的图片。但计算机会将图像看作一个数字数组，问题来了，它想知道这是一张什么样的图像，我们应该怎么样把图像解释给机器它才能读懂？</p>
+
+<p>　　在早期，人们试图将图像分解为机器的 “可理解” 格式，如“模板”。例如，面部总是具有在每个人中有所保留的特定结构，例如眼睛，鼻子或我们的脸的形状。 但是这种方法将是有缺陷的，因为当要识别的对象的数量将增加到一定量级时，“模板” 将不成立。</p>
+
+<p>　　2012年一个深层神经网络架构赢得了 ImageNet 的挑战，从自然场景中识别对象，它在即将到来的 ImageNet 挑战中继续统治其主权，从而证明了解决图像问题的有用性。
+人们通常使用哪些 库 / 语言 来解决图像识别问题？<a href="https://www.analyticsvidhya.com/blog/2016/08/deep-learning-path/">最近的一次调查</a>中，最流行的深度学习库，支持的最友好的语言有 Python ，其次是 Lua ，对 Java 和 Matlab 支持的也有。最流行的库举几个例子：</p>
+
+<ul>
+  <li><a href="http://caffe.berkeleyvision.org/">Caffe</a></li>
+  <li><a href="http://deeplearning4j.org/">DeepLearning4j</a></li>
+  <li><a href="https://www.tensorflow.org/">TensorFlow</a></li>
+  <li><a href="http://www.deeplearning.net/software/theano">Theano</a></li>
+  <li><a href="http://torch.ch/">Torch</a></li>
+</ul>
+
+<p>现在，我们了解了图像的存储方式以及使用的常用库，让我们看看 <code class="highlighter-rouge">TensorFlow</code> 提供的功能。</p>
+
+<h3 id="a-namewhat-is-tensorflowa-tensorflow-"><a name="What-is-TensorFlow"></a>什么是 TensorFlow ？</h3>
+
+<p>让我们从官方定义开始.</p>
+
+<p>　　“<code class="highlighter-rouge">TensorFlow</code> 是一个开源软件库，用于使用数据流图进行数值计算。图中的节点表示数学运算，而图边表示在它们之间传递的多维数据阵列（也称为张量）。 灵活的架构允许您使用单一 API 将计算部署到桌面、服务器或移动设备中的一个或多个的 CPU 或 GPU 中。</p>
+
+<p><img src="http://www.tensorfly.cn/images/tensors_flowing.gif" alt="" /></p>
+
+<p>　　如果感觉这听起来太高大上，不要担心。这里有我简单的定义，<code class="highlighter-rouge">TensorFlow</code> 看起来没什么，只是 numpy 有些难以理解。如果你以前使用过 numpy ，理解 TensorFlow 将是手到擒来！ numpy 和 TensorFlow 之间的主要区别是 TensorFlow 遵循惰性编程范例。 TensorFlow 的操作基本上都是对 session 的操作，它首先构建一个所有操作的图形，当我们调用 session 时 TensorFlow 就开始工作了。它通过将内部数据表示转换为张量（Tensor，也称为多维数组）来构建为可扩展的。 构建计算图可以被认为是 TensorFlow 的主要成分。想更多地了解一个计算图形的数学结构，可以阅读 <a href="http://colah.github.io/posts/2015-08-Backprop/">这篇文章</a> 。</p>
+
+<p>　　通过上面的介绍，很容易将 TensorFlow 分类为神经网络库，但它不仅仅是如此。它被设计成一个强大的神经网络库， 但它有能力做更多的事情。可以构建它为其他机器学习算法，如 决策树 或 k-最近邻，你可以从字面上理解，你可以做一切你在 numpy 上能做的事情！我们暂且称它为 “全能的 numpy” 。</p>
+
+<p><strong>使用 TensorFlow 的优点是：</strong></p>
+
+<ul>
+  <li><strong>它有一个直观的结构</strong> ，顾名思义它有 “张量流”，你可以轻松地可视每个图中的每一个部分。</li>
+  <li><strong>轻松地在 cpu / gpu 上进行分布式计算</strong></li>
+  <li><strong>平台的灵活性</strong>  。可以随时随地运行模型，无论是在移动端、服务器还是 PC 上。</li>
+</ul>
+
+<h3 id="a-namea-typical-flowatensorflow--"><a name="A-typical-flow"></a>TensorFlow 的典型 “流”</h3>
+
+<p>　　每个库都有自己的“实现细节”，即一种写其遵循其编码范例的方式。 例如，当实现 scikit-learn 时，首先创建所需算法的对象，然后在训练和测试集上构建一个模型获得预测，如下所示：</p>
+
+<p>```python</p>
+
+<h1 id="define-hyperparamters-of-ml-algorithm">define hyperparamters of ML algorithm</h1>
+<p>clf = svm.SVC(gamma=0.001, C=100.)
+# train 
+clf.fit(X, y)
+# test 
+clf.predict(X_test)
+```</p>
+
+<p>正如我前面所说，TensorFlow 遵循一种懒惰的方法。 在 TensorFlow 中运行程序的通常工作流程如下：</p>
+
+<ul>
+  <li><strong>建立一个计算图</strong>， 任何的数学运算可以使用 TensorFlow 支撑。</li>
+  <li><strong>初始化变量</strong>， 编译预先定义的变量</li>
+  <li><strong>创建 session</strong>， 这是神奇的开始的地方 ！</li>
+  <li><strong>在 session 中运行图</strong>， 编译图形被传递到 session ，它开始执行它。</li>
+  <li><strong>关闭 session</strong>， 结束这次使用。</li>
+</ul>
+
+<p>TensoFlow 中使用的术语很少</p>
+
+<p><code class="highlighter-rouge">
+placeholder：将数据输入图形的一种方法
+feed_dict：将数值传递到计算图的字典
+</code></p>
+
+<p>让我们写一个小程序来添加两个数字！</p>
+
+<p>```pyhton</p>
+
+<h1 id="import-tensorflow">import tensorflow</h1>
+<p>import tensorflow as tf</p>
+
+<h1 id="build-computational-graph">build computational graph</h1>
+<p>a = tf.placeholder(tf.int16)
+b = tf.placeholder(tf.int16)</p>
+
+<p>addition = tf.add(a, b)</p>
+
+<h1 id="initialize-variables">initialize variables</h1>
+<p>init = tf.initialize_all_variables()</p>
+
+<h1 id="create-session-and-run-the-graph">create session and run the graph</h1>
+<p>with tf.Session() as sess:
+    sess.run(init)
+    print “Addition: %i” % sess.run(addition, feed_dict={a: 2, b: 3})</p>
+
+<h1 id="close-session">close session</h1>
+<p>sess.close()
+```</p>
+
+<h3 id="a-namemlpa-tensorflow-"><a name="MLP"></a>在 TensorFlow 中实现神经网络</h3>
+
+<p><em>注意：我们可以使用不同的神经网络体系结构来解决这个问题，但是为了简单起见，我们在深入实施中讨论 <code class="highlighter-rouge">前馈多层感知器</code>。</em></p>
+
+<p>让我们记住对神经网络的了解。</p>
+
+<p>神经网络的典型实现如下：</p>
+
+<ul>
+  <li>定义要编译的神经网络体系结构</li>
+  <li>将数据传输到模型</li>
+  <li>整个运行中，数据首先被分成批次，以便它可以被摄取。首先对批次进行预处理，扩增，然后送入神经网络进行训练</li>
+  <li>然后，模型被逐步地训练</li>
+  <li>显示特定数量的时间步长的精度</li>
+  <li>训练后保存模型供将来使用</li>
+  <li>在新数据上测试模型并检查其运行方式</li>
+</ul>
+
+<p>在这里，我们解决了我们深刻的学习实践中的问题 - [识别数字]，让再我们花一点时间看看问题陈述。</p>
+
+<p>　　我们的问题是图像识别，以识别来自给定的 28×28 图像的数字。 我们有一个图像子集用于训练，其余的用于测试我们的模型。首先下载训练和测试文件。数据集包含数据集中所有图像的压缩文件， train.csv 和 test.csv 都有相应的训练和测试图像的名称。数据集中不提供任何其他功能，只是原始图像以 “.png” 格式提供。</p>
+
+<p>　　如之前说的，我们将使用 TensorFlow 来创建一个神经网络模型。 所以首先在你的系统中安装 TensorFlow 。 请参考 <a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/g3doc/get_started/os_setup.md">官方的安装指南</a> 进行安装，按您的系统规格。</p>
+
+<p>我们将按照上述模板</p>
+
+<ul>
+  <li>让我们来 导入所有需要的模块</li>
+</ul>
+
+<p>```python</p>
+
+<p>%pylab inline</p>
+
+<p>import os
+import numpy as np
+import pandas as pd
+from scipy.misc import imread
+from sklearn.metrics import accuracy_score
+import tensorflow as tf</p>
+
+<p>```</p>
+
+<ul>
+  <li>让我们来 设置一个种子值，这样我们就可以控制我们的模型随机性</li>
+</ul>
+
+<p>```python</p>
+
+<h1 id="to-stop-potential-randomness">To stop potential randomness</h1>
+<p>seed = 128
+rng = np.random.RandomState(seed)</p>
+
+<p>```</p>
+
+<ul>
+  <li>第一步是设置目录路径，以便保管！</li>
+</ul>
+
+<p>```python</p>
+
+<p>root_dir = os.path.abspath(‘../..’)
+data_dir = os.path.join(root_dir, ‘data’)
+sub_dir = os.path.join(root_dir, ‘sub’)</p>
+
+<h1 id="check-for-existence">check for existence</h1>
+<p>os.path.exists(root_dir)
+os.path.exists(data_dir)
+os.path.exists(sub_dir)</p>
+
+<p>```</p>
+
+<ul>
+  <li>现在让我们读取我们的数据集，这些是 .csv 格式，并有一个文件名以及相应的标签</li>
+</ul>
+
+<p>```python</p>
+
+<p>train = pd.read_csv(os.path.join(data_dir，’Train’，’train.csv’))
+test = pd.read_csv(os.path.join（data_dir，’Test.csv’))
+sample_submission = pd.read_csv(os.path.join(data_dir，’Sample_Submission.csv’))
+train.head()</p>
+
+<p>```</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th style="text-align: center">文件名</th>
+      <th style="text-align: right">标签</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td style="text-align: center">0.png</td>
+      <td style="text-align: right">4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td style="text-align: center">1.png</td>
+      <td style="text-align: right">9</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td style="text-align: center">2.png</td>
+      <td style="text-align: right">1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td style="text-align: center">3.png</td>
+      <td style="text-align: right">7</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td style="text-align: center">4.png</td>
+      <td style="text-align: right">3</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>让我们看看我们的数据是什么样子！我们读取我们的形象并显示出来。</li>
+</ul>
+
+<p>```python</p>
+
+<p>img_name = rng.choice(train.filename)
+filepath = os.path.join(data_dir, ‘Train’, ‘Images’, ‘train’, img_name)</p>
+
+<p>img = imread(filepath, flatten=True)</p>
+
+<p>pylab.imshow(img, cmap=’gray’)
+pylab.axis(‘off’)
+pylab.show()</p>
+
+<p>```</p>
+
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/10/3.png" alt="" /></p>
+
+<p>上面的图像表示为 numpy 数组，如下所示</p>
+
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/10/one.png" alt="" /></p>
+
+<ul>
+  <li>为了方便数据操作，让我们 的存储作为 numpy 的阵列的所有图片</li>
+</ul>
+
+<p>```python</p>
+
+<p>temp = []
+for img_name in train.filename:
+    image_path = os.path.join(data_dir, ‘Train’, ‘Images’, ‘train’, img_name)
+    img = imread(image_path, flatten=True)
+    img = img.astype(‘float32’)
+    temp.append(img)</p>
+
+<p>train_x = np.stack(temp)</p>
+
+<p>temp = []
+for img_name in test.filename:
+    image_path = os.path.join(data_dir, ‘Train’, ‘Images’, ‘test’, img_name)
+    img = imread(image_path, flatten=True)
+    img = img.astype(‘float32’)
+    temp.append(img)</p>
+
+<p>test_x = np.stack(temp)
+```</p>
+
+<ul>
+  <li>由于这是典型的 ML 问题，为了测试我们的模型的正确功能，我们创建一个验证集，让我们以 70:30 的分割训练集 和 验证集</li>
+</ul>
+
+<p>```python</p>
+
+<p>split_size = int(train_x.shape[0]*0.7)</p>
+
+<p>train_x, val_x = train_x[:split_size], train_x[split_size:]
+train_y, val_y = train.label.values[:split_size], train.label.values[split_size:]</p>
+
+<p>```</p>
+
+<ul>
+  <li>我们定义一些辅助函数，我们稍后在我们的程序中使用</li>
+</ul>
+
+<p>```python</p>
+
+<p>def dense_to_one_hot(labels_dense, num_classes=10):
+    “"”Convert class labels from scalars to one-hot vectors”””
+    num_labels = labels_dense.shape[0]
+    index_offset = np.arange(num_labels) * num_classes
+    labels_one_hot = np.zeros((num_labels, num_classes))
+    labels_one_hot.flat[index_offset + labels_dense.ravel()] = 1</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>return labels_one_hot
+</code></pre>
+</div>
+
+<p>def preproc(unclean_batch_x):
+    “"”Convert values to range 0-1”””
+    temp_batch = unclean_batch_x / unclean_batch_x.max()</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>return temp_batch
+</code></pre>
+</div>
+
+<p>def batch_creator(batch_size, dataset_length, dataset_name):
+    “"”Create batch with random samples and return appropriate format”””
+    batch_mask = rng.choice(dataset_length, batch_size)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>batch_x = eval(dataset_name + '_x')[[batch_mask]].reshape(-1, 784)
+batch_x = preproc(batch_x)
+
+if dataset_name == 'train':
+    batch_y = eval(dataset_name).ix[batch_mask, 'label'].values
+    batch_y = dense_to_one_hot(batch_y)
+    
+return batch_x, batch_y
+</code></pre>
+</div>
+
+<p>```</p>
+
+<ul>
+  <li>主要部分！ 让我们定义我们的神经网络架构。 我们定义一个神经网络具有 3 层，输入、隐藏 和 输出， 输入和输出中的神经元数目是固定的，因为输入是我们的 28×28 图像，并且输出是表示类的 10×1 向量。 我们在隐藏层中取 500 神经元。这个数字可以根据你的需要变化。我们把值 赋给 其余变量。 可以阅读 <a href="https://www.analyticsvidhya.com/blog/2016/03/introduction-deep-learning-fundamentals-neural-networks/">神经网络的基础知识的文章</a> ，以更深的了解它是如何工作。</li>
+</ul>
+
+<p>```python</p>
+
+<h3 id="set-all-variables">set all variables</h3>
+
+<h1 id="number-of-neurons-in-each-layer">number of neurons in each layer</h1>
+
+<p>input_num_units = 28*28</p>
+
+<p>hidden_num_units = 500</p>
+
+<p>output_num_units = 10</p>
+
+<h1 id="define-placeholders">define placeholders</h1>
+<p>x = tf.placeholder(tf.float32, [None, input_num_units])
+y = tf.placeholder(tf.float32, [None, output_num_units])</p>
+
+<h1 id="set-remaining-variables">set remaining variables</h1>
+<p>epochs = 5
+batch_size = 128
+learning_rate = 0.01</p>
+
+<h3 id="define-weights-and-biases-of-the-neural-network-refer-this-article-if-you-dont-understand-the-terminologies">define weights and biases of the neural network (refer this article if you don’t understand the terminologies)</h3>
+
+<p>weights = {
+    ‘hidden’: tf.Variable(tf.random_normal([input_num_units, hidden_num_units], seed=seed)),
+    ‘output’: tf.Variable(tf.random_normal([hidden_num_units, output_num_units], seed=seed))
+}</p>
+
+<p>biases = {
+    ‘hidden’: tf.Variable(tf.random_normal([hidden_num_units], seed=seed)),
+    ‘output’: tf.Variable(tf.random_normal([output_num_units], seed=seed))
+}</p>
+
+<p>```</p>
+
+<ul>
+  <li>现在创建我们的神经网络计算图</li>
+</ul>
+
+<p>```python</p>
+
+<p>hidden_layer = tf.add(tf.matmul(x, weights[‘hidden’]), biases[‘hidden’])
+hidden_layer = tf.nn.relu(hidden_layer)</p>
+
+<p>output_layer = tf.matmul(hidden_layer, weights[‘output’]) + biases[‘output’]</p>
+
+<p>```</p>
+
+<ul>
+  <li>此外，我们需要定义神经网络的成本</li>
+</ul>
+
+<p>```python</p>
+
+<p>cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(output_layer, y))</p>
+
+<p>```</p>
+
+<ul>
+  <li>设置优化器，即我们的反向传播算法。 这里我们使用 <a href="https://arxiv.org/abs/1412.6980">Adam</a> ，这是梯度下降算法的高效变体。 有在 tensorflow 可用许多其它优化（参照 <a href="https://www.tensorflow.org/versions/r0.11/api_docs/python/train.html#optimizers">此处</a> ）</li>
+</ul>
+
+<p>```python</p>
+
+<p>optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)</p>
+
+<p>```
+* 定义我们的神经网络结构后，让我们来 初始化所有的变量</p>
+
+<p>```python</p>
+
+<p>init = tf.initialize_all_variables()</p>
+
+<p>```</p>
+
+<ul>
+  <li>现在让我们创建一个 Session ，并在 Session 中运行我们的神经网络。我们还验证我们创建的验证集的模型准确性</li>
+</ul>
+
+<p>```python</p>
+
+<p>with tf.Session() as sess:
+    # create initialized variables
+    sess.run(init)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>### for each epoch, do:
+###   for each batch, do:
+###     create pre-processed batch
+###     run optimizer by feeding batch
+###     find cost and reiterate to minimize
+
+for epoch in range(epochs):
+    avg_cost = 0
+    total_batch = int(train.shape[0]/batch_size)
+    for i in range(total_batch):
+        batch_x, batch_y = batch_creator(batch_size, train_x.shape[0], 'train')
+        _, c = sess.run([optimizer, cost], feed_dict = {x: batch_x, y: batch_y})
+        
+        avg_cost += c / total_batch
+        
+    print "Epoch:", (epoch+1), "cost =", "{:.5f}".format(avg_cost)
+
+print "\nTraining complete!"
+
+
+# find predictions on val set
+pred_temp = tf.equal(tf.argmax(output_layer, 1), tf.argmax(y, 1))
+accuracy = tf.reduce_mean(tf.cast(pred_temp, "float"))
+print "Validation Accuracy:", accuracy.eval({x: val_x.reshape(-1, 784), y: dense_to_one_hot(val_y.values)})
+
+predict = tf.argmax(output_layer, 1)
+pred = predict.eval({x: test_x.reshape(-1, 784)}) ```
+</code></pre>
+</div>
+
+<p>这将是上面代码的输出</p>
+
+<p>```python</p>
+
+<p>Epoch: 1 cost = 8.93566
+Epoch: 2 cost = 1.82103
+Epoch: 3 cost = 0.98648
+Epoch: 4 cost = 0.57141
+Epoch: 5 cost = 0.44550</p>
+
+<p>Training complete!
+Validation Accuracy: 0.952823</p>
+
+<p>```</p>
+
+<ul>
+  <li>验证我们自己的眼睛，让我们来 想象它的预言</li>
+</ul>
+
+<p>```python</p>
+
+<p>img_name = rng.choice(test.filename)
+filepath = os.path.join(data_dir, ‘Train’, ‘Images’, ‘test’, img_name)</p>
+
+<p>img = imread(filepath, flatten=True)</p>
+
+<p>test_index = int(img_name.split(‘.’)[0]) - 49000</p>
+
+<p>print “Prediction is: “, pred[test_index]</p>
+
+<p>pylab.imshow(img, cmap=’gray’)
+pylab.axis(‘off’)
+pylab.show()</p>
+
+<p>```</p>
+
+<p>```python</p>
+
+<p>Prediction is:  8</p>
+
+<p>```</p>
+
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2016/10/8.png" alt="" /></p>
+
+<ul>
+  <li>我们看到的模型性能是相当不错！ 现在让我们 创建一个提交</li>
+</ul>
+
+<p>```python</p>
+
+<p>sample_submission.filename = test.filename</p>
+
+<p>sample_submission.label = pred</p>
+
+<p>sample_submission.to_csv(os.path.join(sub_dir, ‘sub01.csv’), index=False)</p>
+
+<p>```</p>
+
+<p>　　终于完成了！ 我们刚刚创建了自己的训练神经网络！</p>
+
+<h3 id="a-namelimitations-of-tensorflowatensorflow-"><a name="Limitations-of-TensorFlow"></a>TensorFlow 的限制</h3>
+
+<ul>
+  <li>尽管 TensorFlow 是强大的，它仍然是一个低水平库，例如，它可以被认为是机器级语言，但对于大多数功能，您需要自己去模块化和高级接口，如 keras</li>
+  <li>它仍然在继续开发和维护，这是多么👍啊！</li>
+  <li>它取决于你的硬件规格，配置越高越好</li>
+  <li>不是所有变成语言能使用它的 API 。</li>
+  <li>TensorFlow 中仍然有很多库需要手动导入，比如 OpenCL 支持。</li>
+</ul>
+
+<p>上面提到的大多数是在 TensorFlow 开发人员的愿景，他们已经制定了一个路线图，计划库未来应该如何开发。</p>
+
+<h3 id="a-namevs-librariesatensorflow-"><a name="vs-libraries"></a>TensorFlow 与其他库</h3>
+
+<p>　　TensorFlow 建立在类似的原理，如使用数学计算图表的 Theano 和 Torch，但是随着分布式计算的额外支持，TensorFlow 更好地解决复杂的问题。 此外，TensorFlow 模型的部署已经被支持，这使得它更容易用于工业目的，打开一些商业的三方库，如 Deeplearning4j ，H2O 和 Turi。 TensorFlow 有用于 Python，C ++ 和 Matlab 的 API 。 最近还出现了对 Ruby 和 R 等其他语言的支持。因此，TensorFlow 试图获得通用语言支持。</p>
+
+<h3 id="a-namewhere-to-go-from-herea"><a name="Where-to-go-from-here"></a>从这里去哪里？</h3>
+
+<p>　　以上你看到了如何用 TensorFlow 构建一个简单的神经网络，这段代码是为了让人们了解如何开始实现 TensorFlow。 要解决更复杂的现实生活中的问题，你必须在这篇文章的基础上在调整一些代码才行。</p>
+
+<p>　　许多上述功能可以被抽象为给出无缝的端到端工作流，如果你使用 scikit-learn ，你可能知道一个高级库如何抽象“底层”实现，给终端用户一个更容易的界面。尽管 TensorFlow 已经提取了大多数实现，但是也有更高级的库，如 TF-slim 和 TFlearn。</p>
+
+<h3 id="section-2">参考资源</h3>
+<ul>
+  <li><a href="https://github.com/tensorflow/tensorflow">TensorFlow 官方库</a></li>
+  <li>Rajat Monga（TensorFlow技术负责人） <a href="https://youtu.be/wmw8Bbb_eIE">“TensorFlow为大家”</a>  的视频</li>
+  <li><a href="https://github.com/jtoy/awesome-tensorflow/#github-projects">一个专用资源的策划列表</a></li>
+</ul>
+
+<h3 id="section-3">关于原文</h3>
+
+<p>感谢原文作者 <a href="https://www.analyticsvidhya.com/blog/author/jalfaizy/">Faizan Shaikh</a> 的分享，
+这篇文章是在 <a href="https://www.analyticsvidhya.com/blog/2016/10/an-introduction-to-implementing-neural-networks-using-tensorflow/">An Introduction to Implementing Neural Networks using TensorFlow</a> 的基础上做的翻译和局部调整，如果发现翻译中有不对或者歧义的的地方欢迎在下面评论里提问，我会加以修正 。</p>
+
+<p><br />
+转载请注明：<a href="http://baixin">潘柏信的博客</a> » <a href="http://baixin.io/2016/11/neural_networks_using_TensorFlow/">使用 TensorFlow 实现神经网络</a></p>
+
+
+
+  </section>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2016/11/markdownTool/" data-toggle="tooltip" data-placement="top" title="Markdown工具集">上一篇：  <span>Markdown工具集</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2016/12/iOS_Dev_Note/" data-toggle="tooltip" data-placement="top" title="iOS开发中的小问题记录">下一篇：  <span>iOS开发中的小问题记录</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+
+
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "aa395cf7778f458492060f3f53301b7c",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
+
+
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; 潘柏信 2017 Theme by <a href="http://baixin.io/">leopardpan</a> |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

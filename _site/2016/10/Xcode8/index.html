@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Xcode 8 使用笔记</title>
+  <meta name="description" content="最近使用 Xcode8遇到了一些问题，想记下来，发现简书上有位同学写了一篇很详细的教程 原文链接，比较懒惰的我就在他的基础上加了些我自己的一些笔记。">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Xcode 8 使用笔记">
+  <meta name="twitter:description" content="最近使用 Xcode8遇到了一些问题，想记下来，发现简书上有位同学写了一篇很详细的教程 原文链接，比较懒惰的我就在他的基础上加了些我自己的一些笔记。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Xcode 8 使用笔记">
+  <meta property="og:description" content="最近使用 Xcode8遇到了一些问题，想记下来，发现简书上有位同学写了一篇很详细的教程 原文链接，比较懒惰的我就在他的基础上加了些我自己的一些笔记。">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://baixin.io/2016/10/Xcode8/">
+  <link rel="alternate" type="application/rss+xml" title="潘柏信" href="http://baixin.io/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?8ba1c6be0953b6f9c2ba38e57f615421";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-84134159-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 潘柏信 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                leopardpan
+                            
+                        </h2>
+                        <p>
+                           
+                                iOS / 机器学习
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 潘柏信" class="blog-button">潘柏信</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Xcode 8 使用笔记</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2016-10-25 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-10-25</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <p>最近使用 Xcode8遇到了一些问题，想记下来，发现简书上有位同学写了一篇很详细的教程 <a href="http://www.jianshu.com/p/c1904fd8db06">原文链接</a>，比较懒惰的我就在他的基础上加了些我自己的一些笔记。</p>
+
+<h3 id="interface-builder">Interface Builder</h3>
+
+<p>随着 14 年的 iPhone6 和 6P 出来之后，iPhone 的屏幕尺寸也越来越多，屏幕适配是一个需要解决的问题，以后不一定苹果又出什么尺寸的 iPhone 呢。</p>
+
+<p>在 iPhone6 和 6P 发布的同一年，苹果推出的 Xcode6 中在原有的 Auto layout的基础上，添加了Size Classes新特性，通过这个新特性可以使用一个XIB或者SB文件，适配不同的屏幕以及iPhone和iPad两种设备。</p>
+
+<p>在 Xcode8 中，苹果推出了更加强大的可视化编辑工具预览功能，可以在不运行App的情况下，预览当前XIB或SB在不同屏幕尺寸下的显示。(这个功能我记得之前Xcode就有，只是隐藏的比较深，苹果现在给拿到外面了)</p>
+
+<p>选择一个XIB文件进去，点击下面红框的位置，会出现从3.5寸-5.5寸一系列屏幕尺寸的选项。直接点击不同屏幕尺寸，以及横竖屏选项，切换不同的屏幕显示。在iPad上还可以选择是否分屏，功能非常强大。</p>
+
+<p><img src="/images/posts/Xcode8/image1.png" height="200" width="600" /></p>
+
+<p>在右边有一个 Vary for Traits 选项，点击这个选项就可以同时显示所有可选的屏幕样式，功能和上面图片都一样，只是显示上看起来比较多。</p>
+
+<p><img src="/images/posts/Xcode8/image2.png" height="160" width="600" /></p>
+
+<p>还有一点，新创建的 XIB 控件尺寸，不再是之前 600*600 的方块了，而是默认是6s的长方形 XIB 文件，看起来舒服多了。</p>
+
+<h3 id="targetgeneral-">Target中General 的变化</h3>
+
+<p>在 Xcode8 之前，都需要自己设置证书和描述文件。如果设置出现错误的情况下，还可以通过点击 Fix issue 来修复这个错误。但这有个问题就在于，Fix issue 选项并不是那么好用，有的时候设置是正确的这里也提示需要 Fix issue。</p>
+
+<p>可能苹果也意识到这个问题的存在，在Xcode8中可以通过Automatically manage signing选项，让苹果为我们管理证书和配置文件，设置也都是由苹果来完成的。在Xcode8中新建项目，这个选项默认是被勾选的。</p>
+
+<p><img src="/images/posts/Xcode8/image3.png" height="350" width="500" /></p>
+
+<p>从上面图中可以看到，苹果帮我们自动管理了证书和配置文件。而且在之前的项目中，如果想要设置安装后显示在手机上的App名字，还需要自己到Info.plist文件中，修改Display Name字段，而现在直接在General中就可以做修改，这个修改和Info.plist是同步的。</p>
+
+<p>但是，如果我想自己管理证书和描述文件呢？只需要去掉Automatically manage signing选项。</p>
+
+<p><img src="/images/posts/Xcode8/image4.png" height="350" width="500" /></p>
+
+<p>如果自己到Build Settings中手动设置证书和描述文件，可以发现Provisioning Profile选项已经被标明为Deprecated，也就是苹果并不推荐手动设置。</p>
+
+<h3 id="xcode-">Xcode 插件</h3>
+
+<p>升级 Xcode8 之后会发现，在 Xcode8 中所有第三方插件都失效了，并且连之前菜单栏的插件选项也不存在了。在之前很多 iOS 开发者，都是通过 <a href="http://alcatraz.io/">Alcatraz</a> 来管理插件的，现在 Alcatraz 也是不可用的。但是X code8 自身也对编译器进行了升级，将一些比较好的插件功能加入到 Xcode 中，例如单行高亮显示等。</p>
+
+<p>在 Xcode8 中支持了开发插件工程，并且为我们提供了一个插件模板，开发的插件可以上传到App Store 下载。苹果这么做有一个原因在于，之前 Xcode和插件是运行在同一个进程的，所以插件的崩溃也会导致Xcode崩溃。苹果现在将插件作为一个单独的应用程序，分开进程运行，不会对Xcode带来其他影响。</p>
+
+<p><img src="/images/posts/Xcode8/image5.png" height="350" width="500" /></p>
+
+<h3 id="runtime-issues">Runtime Issues</h3>
+
+<p>在开发过程中，因为语法或明显的代码错误(例如Retain Cycle)，编译器可以发现并报黄色或红色警告。但是一些因为代码逻辑导致的错误，编译器并没有办法找到。例如下面的这句代码，因为代码逻辑的问题导致两个数组相互引用，都不能释放。</p>
+
+<p><img src="/images/posts/Xcode8/image6.png" height="180" width="600" /></p>
+
+<p>这时候可以通过 Xcode8 提供的 Runtime Issues 新特性，查找到运行过程中出现的问题，并通过 Graph 的方式将问题可视化的展现给开发者。</p>
+
+<p><img src="/images/posts/Xcode8/image7.png" height="300" width="600" /></p>
+
+<h3 id="debug-memory-graph">Debug Memory Graph</h3>
+
+<p>在Xcode6中出现了Debug View Hierarchy新特性，可以通过其调试当前App的视图层级，查找UI相关的bug非常方便。在Xcode8中苹果为开发者提供了Debug Memory Graph特性，通过这个新特性，可以直接选择一个对象，查看与其相关的内存关系。</p>
+
+<p><img src="/images/posts/Xcode8/image8.png" height="300" width="600" /></p>
+
+<p>Debug Memory Graph 和 Runtime Issues 可以配合使用，通过 Debug Memory Graph 分析内存关系完成后，点击 Runtime Issues 可以看到已经发现的内存问题。</p>
+
+<h3 id="swift-3">Swift 3</h3>
+
+<p>Xcode8 带来了新版本的 Swift3，新版本的Swift变化较大，如果旧版的Swift项目在Xcode8上编译可能会失败。对此，苹果为开发者提供了Swift迁移工具，听说不太好用(我没用过这个工具)。</p>
+
+<p>如果不想立刻就迁移到Swift3，可以在Builder Settings中进行设置，选择Use Legacy Swift Language Version设置为YES，就可以继续使用旧版本的Swift2.3。</p>
+
+<p><img src="/images/posts/Xcode8/image9.png" height="300" width="600" /></p>
+
+<h3 id="section">其他更新</h3>
+
+<p>Xcode 新版字体，SF Mono Regular 字体。更新 Xcode 之后我比较喜欢这种字体，看起来代码非常工整。
+被编辑的行高亮显示。之前Xcode有个插件就是这个功能，Xcode8把高亮功能集成进来了，使用起来很方便。
+最新版的API文档，展示样式发生了很大的改变。
+更方便的生成文档(就是喵神写的VVDocumenter)，在Xcode8中可以将光标放在方法上面，通过option + command + /快捷键生成文档注释。</p>
+
+<h3 id="xcode8xibstoreboard">Xcode8适配,XIB和Storeboard适配</h3>
+
+<p>在 Xcode8 之前，创建一个 XIB 或 SB 文件，都是一个 600*600 的方块 XIB 文件。在 Xcode8 之后，创建的 XIB 文件默认是6s尺寸的大小。</p>
+
+<p>但是 Xcode8 打开之前旧项目的 XIB或SB 文件时，会弹出下面的弹框， 这时候一般直接选择Choose Device即可。</p>
+
+<p><img src="/images/posts/Xcode8/image10.png" height="300" width="500" /></p>
+
+<p>但是这样有个问题，如果Xcode8打开过这个XIB文件，并选择Choose Device之后。其他的Xcode8以下版本的编译器，将无法再打开这个文件，会报以下错误：</p>
+
+<p>The document “ViewController.xib” requires Xcode 8.0 or later. This version does not support documents saved in the Xcode 8 format. Open this document with Xcode 8.0 or later.
+有两种方法解决这个问题：</p>
+
+<p>你同事也升级Xcode8，比较推荐这种方式，应该迎接改变。
+右击XIB或SB文件 -&gt; Open as -&gt; Source Code，删除xml文件中下面一行字段。</p>
+<capability name="documents saved in the Xcode 8 format" mintoolsversion="8.0" />
+
+<h3 id="section-1">编译错误</h3>
+
+<p>升级Xcode之后，Xcode8对之前的一些修饰符和语句不兼容，会导致一些编译错误。这种错误导致的原因很多，这里大致列几条，各位还是根据自身遇到的情况做修改吧。</p>
+
+<p>之前一些泛型相关的修饰符，nullable之类的有的会报错。
+CAAnimation及其子类，设置代理属性后，必须在@interface()遵守代理，否则报错，等等。</p>
+
+<h3 id="section-2">权限适配</h3>
+
+<p>这应该算iOS10系统适配的范畴，最近这两个都在弄，所以就直接和Xcode8适配一起写出来了。</p>
+
+<p>在iOS10之后需要在Info.plist中，添加新的字段获取权限，否则在iOS10上运行会导致崩溃。下面是一些常用的字段，如果有缺少的麻烦各位评论区补充一下。</p>
+
+<p>Key	权限
+Privacy - Camera Usage Description	相机
+Privacy - Microphone Usage Description	麦克风
+Privacy - Photo Library Usage Description	相册
+Privacy - Contacts Usage Description	通讯录
+Privacy - Bluetooth Peripheral Usage Description	蓝牙
+Privacy - Location When In Use Usage Description	定位
+Privacy - Location Always Usage Description	后台定位
+Privacy - Calendars Usage Description	日历</p>
+
+<p>参考资料：<a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html">developer.apple</a></p>
+
+<h3 id="section-3">推送通知</h3>
+
+<p>苹果的推送在之前iOS8和iOS9的时候就发生过大的更新，推送功能越来越强大。在iOS10之后苹果推出了UserNotifications框架，可以通过这个框架更好的控制推送通知，可以更新、修改锁屏页面的推送消息，可以添加图片等功能。</p>
+
+<p>但是在用Xcode8打包后，并且不对代码进行修改的情况下，会发现打包后苹果发来了一封邮件。这封邮件大概意思是如果需要使用推送通知，需要对代码做修改，否则将不能使用推送通知。</p>
+
+<p><img src="/images/posts/Xcode8/image11.png" height="300" width="600" /></p>
+
+<p>这是因为在Xcode8之后，如果需要使用Push Notifications的功能，需要勾选Capabilities -&gt; Push Notifications为YES，否则进行远程推送就会有问题，并且会收到苹果发来的这封邮件。</p>
+
+<h3 id="log">删除系统log</h3>
+
+<p>升级Xcode8之后，在调试和运行过程中，发现控制台打印了很多不认识的log，这些log是系统打印的，和开发者没关系。但是这么多log看着比较乱，怎么屏蔽掉呢？</p>
+
+<p>subsystem: com.apple.UIKit, category: HIDEventFiltered, enable_level: 0, persist_level: 0, default_ttl: 0, info_ttl: 0, debug_ttl: 0, generate_symptoms: 0, enable_oversize: 1, privacy_setting: 2, enable_private_data: 0
+在Target -&gt; Edit Scheme -&gt; Run -&gt; Arguments中，添加OS_ACTIVITY_MODE字段，并设置为Disable即可。</p>
+
+<p><img src="/images/posts/Xcode8/image12.png" height="300" width="500" /></p>
+
+<p>顺便提一下，这两天在设置log选项的时候，发现可以通过在Arguments中设置参数，打印出App加载的时长，包括整体加载时长，动态库加载时长等。</p>
+
+<p>在Environment Variables中添加DYLD_PRINT_STATISTICS字段，并设置为YES，在控制台就会打印加载时长。</p>
+
+<p><img src="/images/posts/Xcode8/image13.png" height="300" width="600" /></p>
+
+<h3 id="awakefromnib">awakeFromNib报警告</h3>
+
+<p>老项目在Xcode8中，有些重写awakeFromNib方法的地方，会报下面的错误。这是因为没有调用super的方法导致的，还好我平时都是调用super的，我代码目前还没出问题。</p>
+
+<p><code class="highlighter-rouge">
+Method possibly missing a [super awakeFromNib] call
+</code></p>
+
+
+
+  </section>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2016/10/jekyll_tutorials1/" data-toggle="tooltip" data-placement="top" title="Jekyll搭建个人博客">上一篇：  <span>Jekyll搭建个人博客</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2016/11/TensorFlowOniOSUse1/" data-toggle="tooltip" data-placement="top" title="TensorFlow 在 iOS 平台上的使用(一)">下一篇：  <span>TensorFlow 在 iOS 平台上的使用(一)</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+
+
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "aa395cf7778f458492060f3f53301b7c",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
+
+
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; 潘柏信 2017 Theme by <a href="http://baixin.io/">leopardpan</a> |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

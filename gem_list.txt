@@ -1,0 +1,13 @@
+bigdecimal
+CFPropertyList
+io-console
+json
+libxml-ruby
+minitest
+nokogiri
+psych
+rake
+rdoc
+ruby
+sqlite3
+test-unit
