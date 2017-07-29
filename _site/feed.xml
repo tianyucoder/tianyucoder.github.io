@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tianyu</title>
-    <description>欢迎来到我的个人站~</description>
-    <link>http://baixin.io/</link>
-    <atom:link href="http://baixin.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 29 Jul 2017 15:20:57 +0800</pubDate>
-    <lastBuildDate>Sat, 29 Jul 2017 15:20:57 +0800</lastBuildDate>
+    <description>欢迎来到我的个人站</description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 29 Jul 2017 17:28:21 +0800</pubDate>
+    <lastBuildDate>Sat, 29 Jul 2017 17:28:21 +0800</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -228,11 +228,10 @@ hexo version  #查看Hexo的版本
 
 &lt;p&gt; &lt;/p&gt;
 
-&lt;p&gt;转载请注明原地址，潘柏信的博客：&lt;a href=&quot;http://leopardpan.github.io&quot;&gt;http://leopardpan.github.io&lt;/a&gt; 谢谢！&lt;/p&gt;
 </description>
         <pubDate>Tue, 25 Aug 2015 00:00:00 +0800</pubDate>
-        <link>http://baixin.io/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
-        <guid isPermaLink="true">http://baixin.io/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+        <link>/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+        <guid isPermaLink="true">/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
         
         <category>博客</category>
         

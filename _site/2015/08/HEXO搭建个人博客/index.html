@@ -24,8 +24,8 @@
   <link rel="stylesheet" href="/css/main.css">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <link rel="canonical" href="http://baixin.io/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
-  <link rel="alternate" type="application/rss+xml" title="Tianyu" href="http://baixin.io/feed.xml">
+  <link rel="canonical" href="/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+  <link rel="alternate" type="application/rss+xml" title="Tianyu" href="/feed.xml">
   
   <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
 
@@ -36,27 +36,8 @@
 
 <!-- 百度统计 -->
   
-  <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?8ba1c6be0953b6f9c2ba38e57f615421";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-  </script>
-  
 
 <!-- google 统计 -->
-  
-  <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-84134159-3', 'auto');
-      ga('send', 'pageview');
-  </script>
   
 
 </head>
@@ -110,7 +91,7 @@
                     <div class="info-back">
                         <h2> 
                             
-                                Welcome
+                                Tianyu
                             
                         </h2>
                         <p>
@@ -128,7 +109,7 @@
         <span class="panel-cover__subtitle panel-subtitle">技术没有尽头，抱着热爱学习的心面对生活。</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <p class="panel-cover__description">欢迎来到我的个人站</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
         
         
@@ -395,29 +376,18 @@ hexo version  #查看Hexo的版本
 
 <p> </p>
 
-<p>转载请注明原地址，潘柏信的博客：<a href="http://leopardpan.github.io">http://leopardpan.github.io</a> 谢谢！</p>
 
   </section>
-  <!--高速版-->
-<div id="SOHUCS" sid="请将此处替换为配置SourceID的语句"></div>
-<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
-<script type="text/javascript">
-window.changyan.api.config({
-appid: 'cyt8xz1NE',
-conf: 'prod_6ad660aaba524170a3fd84204e22200c'
-});
-</script>
-</article>
-
+  
 <section>
 
             <div class="content-play">
-              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
               <div class="hide_box-play"></div>
               <div class="shang_box-play">
                 <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
                 <div class="shang_tit-play">
-                  <p>感谢您的支持，我会继续努力的!</p>
+                  <p>感谢您的支持，我会继续努力!</p>
                 </div>
                 <div class="shang_payimg">
                     <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
@@ -425,7 +395,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
               <div class="shang_payimg">    
                     <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
                 </div>
-                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <!--<div class="pay_explain">扫码打赏，你说多少就多少</div>-->
                 <div class="shang_payselect">
                   <div class="pay_item checked" data-id="alipay">
                     <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
@@ -435,7 +405,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
                   </div>
                 </div>
                 <div class="shang_info-play">
-                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                  <p>打开<span id="shang_pay_txt">支付宝/微信</span>扫一扫，即可进行扫码打赏哦</p>
                 </div>
               </div>
             </div>
@@ -451,7 +421,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
             <style type="text/css">
               .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
               .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
-              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play{width:540px;height:300px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
               .shang_box-play img{border:none;border-width:0;}
               .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
               .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
@@ -459,12 +429,13 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
                 margin-right: 10px;margin-top: 20px;
               }
               .shang_logo{display:block;text-align:center;margin:20px auto;}
-              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play{width: 100%;height: 25px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+/*              background: url('/images/payimg/cy-reward-title-bg.jpg');*/
               .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
               .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
               .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
               .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
-              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:0px;cursor:pointer;height:40px;width:500px;margin-left:100px;}
               .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
               .shang_info-play{clear:both;}
               .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
@@ -475,6 +446,17 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
         
     </ul>
 </section>
+
+  <!--高速版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cyt8xz1NE',
+conf: 'prod_6ad660aaba524170a3fd84204e22200c'
+});
+</script>
+</article>
 
 <!--<section class="post-comments">
 
@@ -506,7 +488,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
           
           <!-- Weibo -->
           <li class="navigation__item_social">
-            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+            <a href="http://weibo.com/tianyu5177" title="@tianyu5177 的微博" target="_blank">
               <i class='social fa fa-weibo fa-2x'></i>
               <span class="label">Weibo</span>
             </a>
@@ -516,7 +498,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
           
           <!-- Github -->
           <li class="navigation__item_social">
-            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+            <a href="https://github.com/Tianyu5177" title="@Tianyu5177 的 Github" target="_blank">
               <i class='social fa fa-github fa-2x'></i>
               <span class="label">Github</span>
             </a>
@@ -528,17 +510,17 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
           
 
           <!-- RSS -->
-          <li class="navigation__item_social">
+          <!--<li class="navigation__item_social">
             <a href="/feed.xml" rel="author" title="RSS" target="_blank">
               <i class='social fa fa-rss fa-2x'></i>
               <span class="label">RSS</span>
             </a>
-          </li>
+          </li>-->
 
           
           <!-- Email -->
           <li class="navigation__item_social">
-            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+            <a href="mailto:zhangtianyu5177@sina.com" title="Contact me">
               <i class='social fa fa-envelope fa-2x'></i>
               <span class="label">Email</span>
             </a>
@@ -550,7 +532,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
 
         </div>
 
-        <div class = "footer_div">  
+        <!--<div class = "footer_div">  
            <p class="copyright text-muted">
             Copyright &copy; Tianyu 2017 Theme by <a href="http://baixin.io/">leopardpan</a> |
             <iframe
@@ -560,7 +542,7 @@ conf: 'prod_6ad660aaba524170a3fd84204e22200c'
             </iframe>
             </p>
         	<div align="right">
-    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
 
           <!-- 访问统计 -->
           <span id="busuanzi_container_site_pv">

@@ -1,12 +1,12 @@
 # Basic
 title: Tianyu
 subtitle: 技术没有尽头，抱着热爱学习的心面对生活。
-description: 欢迎来到我的个人站~
+description: 欢迎来到我的个人站
 # 头像里面的标题
-avatarTitle: Welcome
+avatarTitle: Tianyu
 # 头像里面的描述
 avatarDesc: Java / 产品 / Web
-url: "http://baixin.io"
+#url: "http://baixin.io"
 
 # Comment
 comment:
@@ -16,21 +16,21 @@ comment:
 
 # Social
 social:
-    weibo: 5366874726 
-    github: leopardpan
+    weibo: tianyu5177 
+    github: Tianyu5177
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: zhangtianyu5177@sina.com
 
 # 百度统计 
 # 使用博客模板请去掉或者更换 id 
-baidu:
-    id: 8ba1c6be0953b6f9c2ba38e57f615421  
+#baidu:
+    #id: 8ba1c6be0953b6f9c2ba38e57f615421  
 
 # Google Analytics
 # 使用博客模板请去掉或者更换 id
-ga:
-    id: UA-84134159-3   
-    host: auto  
+#ga:
+    #id: UA-84134159-3   
+    #host: auto  
 
 
 # 《----------------- 上面的信息修改成你自己的 ---------------------------》
