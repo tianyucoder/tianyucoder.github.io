@@ -5,9 +5,140 @@
     <description>欢迎来到我的个人站</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 29 Aug 2017 17:48:54 +0800</pubDate>
-    <lastBuildDate>Tue, 29 Aug 2017 17:48:54 +0800</lastBuildDate>
+    <pubDate>Tue, 29 Aug 2017 17:52:34 +0800</pubDate>
+    <lastBuildDate>Tue, 29 Aug 2017 17:52:34 +0800</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>web请求的服务器跳转和客户端跳转</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;概要：&lt;/h2&gt;
+&lt;p&gt;  最近正在过一些web基础知识，就随手总结一下，本文简单梳理和总结一下关于web中两种跳转方式的原理和区别，以及以JSP标签和java代码为例的具体实现方式。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;两种方式的特点：&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;&lt;strong&gt;1.服务器端跳转：&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;1.1 基本流程&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;  客户端发送一个请求，请求一个服务器资源，如JSP和Servlet等，这个资源又将请求转到服务器的另一个资源，然后再给客户端发送一个响应，也就是说服务器端跳转是客户端发送1次请求，服务器端给出1次响应，由于是服务器内部的跳转，在客户端的表现是透明的，所以地址栏是不改变的。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.2 特点&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;特点1：&lt;/strong&gt;&lt;strong&gt;1次&lt;/strong&gt;请求，&lt;strong&gt;1次&lt;/strong&gt;回应。&lt;br /&gt;
+&lt;strong&gt;特点2：&lt;/strong&gt;地址栏的路径不会被改变。&lt;br /&gt;
+&lt;strong&gt;特点3：&lt;/strong&gt;对于&lt;strong&gt;JSP&lt;/strong&gt;内置的&lt;strong&gt;request对象&lt;/strong&gt;在跳转后，属性&lt;strong&gt;可用&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;
+ &lt;strong&gt;1.3 常见实现方式：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;1.用jsp标签：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;jsp:forward page=&quot;目标地址&quot;/&amp;gt;	
+
+&amp;lt;!-- 这里需要说明的是：&amp;lt;jsp:forward&amp;gt;,属于无条件跳转，但是它只能在容器内跳转，例如你不能指向百度。并且当页面中存在&amp;lt;jsp:forward&amp;gt;标签时，本页面代码不再执行，直接强制跳转，所以要确保你使用此标签前，已经释放了应该释放的资源，例如数据库连接等等。--&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;2.在JSP中使用java：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;request.getRequestDispatcher(&quot;目标地址&quot;).forward(request, response); //我们常说的“转发”，同样只能在容器内跳转。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;&lt;strong&gt;2.客户端跳转：&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;2.1 基本流程&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;  客户端同样是发送一个请求给服务器端资源，这个服务器资源会首先给客户端一个响应，客户端再根据这个响应当中所包含的地址，再次向服务器端发送一个请求，也就是说客户端跳转是2次请求，2次响应。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2.2 特点&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;特点1：&lt;/strong&gt;&lt;strong&gt;2次&lt;/strong&gt;请求，&lt;strong&gt;2次&lt;/strong&gt;响应。&lt;br /&gt;
+&lt;strong&gt;特点2：&lt;/strong&gt;地址栏的路径会改变。&lt;br /&gt;
+&lt;strong&gt;特点3：&lt;/strong&gt;对于&lt;strong&gt;JSP&lt;/strong&gt;内置的&lt;strong&gt;request对象&lt;/strong&gt;在跳转后，属性&lt;strong&gt;不可用&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;2.3 常见实现方式：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;1.靠一些html标签（当然也可以是其他的html标签，以&lt;strong&gt;&amp;lt;a&amp;gt;&lt;/strong&gt;标签举例）：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;a href =&quot;目标地址&quot;&amp;gt;&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;2.在JSP中使用java：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;response.sendRedirect(&quot;目标地址&quot;); //我们常说的“重定向”
+
+//这里需要说明的是：sendREdirect可以任意跳转，例如直接指向百度也是可以的，但是要用有http://协议头。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;图示理解&lt;/h2&gt;
+&lt;p&gt;  为了能更好的理解并记住这两种方式，我们通过下面两个例子进行理解，本人的经验和技术都有限，所以不知道例子是否恰当，但是希望可以帮助大家理解：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;我们先看服务器跳转：&lt;/strong&gt;
+&lt;img src=&quot;http://oi5hiw2r7.bkt.clouddn.com//blog/img/a.jpg?imageMogr2/thumbnail/700x500&amp;gt;/blur/1x0/quality/100&quot; alt=&quot;服务器跳转图示&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;在服务器跳转中（如上图）：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;1.客户去银行窗口咨询一项理财服务（相当于客户端的1次请求）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2.银行窗口的员工发现自己不清楚这个理财产品，电话询问了主管，主管告诉了她相关信息。（相当于服务器内部进行了跳转）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;3.窗口员工把理财产品信息告诉了客户（客户收到了服务器的1次响应）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;注意在整个过程中：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;客户相当于客户端，主管和办事窗口相当于服务器。这个过程中客户端发了&lt;strong&gt;1&lt;/strong&gt;次请求，得到&lt;strong&gt;1&lt;/strong&gt;次回应。办事窗口与主管之间是可以互通消息的，相当于客户端与服务器之间在这种跳转中request对象等是可以用的；客户在这个过程中并不知道办事窗口员工给主管打了电话，只知道窗口告诉了他最终结果，相当于客户端浏览器的地址没有任何变化，但是返回的内容是经过服务器内部跳转之后的。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;再看客户端跳转：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://oi5hiw2r7.bkt.clouddn.com//blog/img/b.jpg?imageMogr2/thumbnail/700x500&amp;gt;/blur/1x0/quality/100&quot; alt=&quot;服务器跳转图示&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;在客户端跳转中（如上图）：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;1.客户去银行窗口咨询一项理财服务（相当于客户端的一次请求）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2.银行窗口的员工发现自己不清楚这个理财产品，并告知客户去隔壁的主管窗口办理。（相当于客户端得到了一次服务器的响应，内容为：“去找主管”。）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;3.客户去隔壁的窗口找主管咨询，因为主管不知道客户要咨询什么，所以客户再次说明自己要咨询的理财产品。（相当于客户端再次发起请求，但是请求中的request属性都不再可用），客户此时换了座位，坐在了主管窗口。（相当于浏览器的地址发生改变，因为这是客户端自己发出的请求。）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;4.主管告诉了客户相关信息（相当于客户端再次得到一次响应）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;注意在整个过程中：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;  客户同样相当于客户端，主管和办事窗口相当于服务器。这个过程中客户端发了&lt;strong&gt;2&lt;/strong&gt;次请求，得到&lt;strong&gt;2&lt;/strong&gt;次回应。并且办事窗口与主管之间是&lt;strong&gt;不可以&lt;/strong&gt;互通消息的，客户和办事窗口说了什么，主管完全不知道，客户只能完全再复述一遍才可以继续沟通，相当于客户端与服务器之间在这种跳转中request对象等是&lt;strong&gt;不可用&lt;/strong&gt;的；因为客户自己去的主管窗口，所以客户的位置发生了改变，相当于浏览器的地址发生了改变。&lt;/p&gt;
+
+&lt;p&gt;希望能对看到总结的小伙伴有一些帮助。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 25 Sep 2016 00:00:00 +0800</pubDate>
+        <link>/2016/09/%E5%85%B3%E4%BA%8EJSP%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%BC%8F/</link>
+        <guid isPermaLink="true">/2016/09/%E5%85%B3%E4%BA%8EJSP%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%BC%8F/</guid>
+        
+        <category>JSP技术</category>
+        
+        
+      </item>
     
       <item>
         <title>HEXO搭建个人博客</title>
