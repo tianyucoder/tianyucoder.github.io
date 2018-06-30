@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>JS中addEventListener的事件捕获、事件冒泡</title>
+  <meta name="description" content="概要：  addEventListener()函数是最常用的用来为指定的dom元素动态绑定事件,在最近在addEventListener这个方法上踩了一个小坑，所以在这里仔细的总结一下这个方法，希望对各位小伙伴有帮助。">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="JS中addEventListener的事件捕获、事件冒泡">
+  <meta name="twitter:description" content="概要：  addEventListener()函数是最常用的用来为指定的dom元素动态绑定事件,在最近在addEventListener这个方法上踩了一个小坑，所以在这里仔细的总结一下这个方法，希望对各位小伙伴有帮助。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="JS中addEventListener的事件捕获、事件冒泡">
+  <meta property="og:description" content="概要：  addEventListener()函数是最常用的用来为指定的dom元素动态绑定事件,在最近在addEventListener这个方法上踩了一个小坑，所以在这里仔细的总结一下这个方法，希望对各位小伙伴有帮助。">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="/2018/05/JS%E4%B8%ADaddEventListener%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7-%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1/">
+  <link rel="alternate" type="application/rss+xml" title="Tianyu" href="/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+
+<!-- google 统计 -->
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 Tianyu 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                Tian yu
+                            
+                        </h2>
+                        <p>
+                           
+                                web前端 / 业余产品
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Tianyu" class="blog-button">Tianyu</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">技术没有尽头，抱着热爱学习的心面对生活。</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的一亩三分地。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">JS中addEventListener的事件捕获、事件冒泡</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2018-05-10 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-05-10</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <h2 id="section">概要：</h2>
+<p>  addEventListener()函数是最常用的用来为指定的dom元素动态绑定事件,在最近在addEventListener这个方法上踩了一个小坑，所以在这里仔细的总结一下这个方法，希望对各位小伙伴有帮助。</p>
+
+<h3 id="section-1"><strong>一、基本形式及参数：</strong></h3>
+
+<p>  addEventListener()有三个参数，具体如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>addEventListener(type,listener,useCapture);
+</code></pre>
+</div>
+
+<p><strong>参数说明：</strong></p>
+
+<blockquote>
+  <p><strong>type：</strong>监听事件的类型，如：click、load… 等等。<br />
+<strong>listener：</strong>执行监听事件的函数名称。<br />
+<strong>useCapture：</strong> 是否采用捕获模式,<strong>fasle</strong>:冒泡模式；<strong>true</strong>:捕获模式。</p>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="section-2"><strong>二、比较常用的方式：</strong></h3>
+<p>  例如给一个按钮增加监听方法，这样我们点击id为button0的元素时，控制台就会输出“hello”。	<br /></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;button id="button0"&gt;按钮0&lt;/button&gt;
+
+var btn = document.getElementById("button0");
+
+btn.addEventListener("click",btnHandler);
+
+function btnHandler(){
+    console.log("hello")// 处理逻辑
+}
+</code></pre>
+</div>
+
+<h3 id="section-3"><strong>三、冒泡模式</strong></h3>
+<p>  接下来我们就围绕第三个参数来探讨问题，为了更清晰的解释问题，我们先写一个嵌套的四个div，HTML和CSS如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> &lt;style&gt;
+    #div0{
+        width: 200px;
+        height: 200px;
+        background-color: gray;
+    }
+    #div1{
+        width: 160px;
+        height: 160px;
+        background-color: orange;
+    }
+    #div2{
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+    #div3{
+        width: 60px;
+        height: 60px;
+        background-color: pink;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  
+&lt;div id="div0"&gt;
+  &lt;div id="div1"&gt;
+    &lt;div id="div2"&gt;
+        &lt;div id="div3"&gt;
+            
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+</code></pre>
+</div>
+
+<p>  浏览器展示效果如下图（为方便观察，我在每个div上加了文字说明）：</p>
+
+<p><img src="http://oi5hiw2r7.bkt.clouddn.com/div.png?imageMogr2/thumbnail/300x400&gt;/blur/1x0/quality/100" alt="网页展示" /></p>
+
+<p>  当前结构的3D侧视图如下：(由内到外分别为：div0、div1、div2、div3)div0是根div元素。</p>
+
+<p><img src="http://oi5hiw2r7.bkt.clouddn.com/div3D.png?imageMogr2/thumbnail/300x400&gt;/blur/1x0/quality/100" alt="3D展示" /></p>
+
+<p>  接下来我们给每一个div都绑定监听方法，让点击当前div时，控制台输出当前div名称，所有的useCapture都设置为fasle，使用冒泡模式，JS代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> // 获取每个div的DOM对象。
+ var div0 = document.getElementById("div0")
+var div1 = document.getElementById("div1")
+var div2 = document.getElementById("div2")
+var div3 = document.getElementById("div3")
+ // 给每个div增加监听事件。
+div0.addEventListener("click",div0Handler,false);
+div1.addEventListener("click",div1Handler,false);
+div2.addEventListener("click",div2Handler,false);
+div3.addEventListener("click",div3Handler,false);
+ // div0的回调函数
+function div0Handler(e){
+    e=e || window.event;
+    console.log("div0")
+}
+// div1的回调函数
+function div1Handler(e){
+    e=e || window.event;
+    console.log("div1")
+}
+// div2的回调函数
+function div2Handler(e){
+    e=e || window.event;
+    console.log("div2")
+}
+// div3的回调函数
+function div3Handler(e){
+    e=e || window.event;
+    console.log("div3")
+}
+</code></pre>
+</div>
+
+<p>  下面我们开始观察结果：</p>
+
+<blockquote>
+  <p><strong>输出1：</strong>点击div0（灰色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出2：</strong>点击div1（橙色的），控制台先后输出为：<code class="highlighter-rouge">div1</code>、<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出3：</strong>点击div2（蓝色的），控制台先后输出为：<code class="highlighter-rouge">div2</code>、<code class="highlighter-rouge">div1</code>、<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出4：</strong>点击div3（粉色的），控制台先后输出为：<code class="highlighter-rouge">div3</code>、<code class="highlighter-rouge">div2</code>、<code class="highlighter-rouge">div1</code>、<code class="highlighter-rouge">div0</code>。</p>
+</blockquote>
+
+<p>  <strong>解读上述输出结果：</strong><br />
+  
+输出1不难理解，点击div0即输出当前的“div0”，那么输出2怎么解释呢？<br />我们可以这样去理解输出2：
+当点击div0时，div0的监听的回调函数会正常输出“div0”，但是输出之后事情并没有结束，<strong>因为此时方法的useCapture为fale，即当前为冒泡模式，所以点击div1之后，事件会向它的祖先元素(div1)扩散，由于祖先元素也绑定了监听事件，所以祖先素对应的监听函数也执行了</strong>，所以输出了“div1”，这就是<strong>冒泡模式</strong>，理解了输出2，所以也就不难理解输出3、输出4了。</p>
+
+<blockquote>
+  <p><strong>冒泡模式总结：</strong><br />
+  冒泡模式的“冒泡”，可以理解为：从当前元素触发监听事件后，向自己的祖先元素一层一层扩散（冒泡），一层一层的祖先素都会响应自己的监听函数,直到DOM的根元素，即冒泡模式的方向是：从自己到祖先元素。</p>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="section-4"><strong>四、捕获模式</strong></h3>
+<p>还是刚才的代码，我们开启你捕获模式，把事件监听部分代码改为如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 给每个div增加监听事件，这次为捕获模式，全部为true。
+div0.addEventListener("click",div0Handler,true);
+div1.addEventListener("click",div1Handler,true);
+div2.addEventListener("click",div2Handler,true);
+div3.addEventListener("click",div3Handler,true);
+</code></pre>
+</div>
+
+<p>  接下来观察输出结果：</p>
+
+<blockquote>
+  <p><strong>输出1：</strong>点击div0（灰色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出2：</strong>点击div1（橙色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>、<code class="highlighter-rouge">div1</code>。 <br />
+<strong>输出3：</strong>点击div2（蓝色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>、<code class="highlighter-rouge">div1</code>、<code class="highlighter-rouge">div2</code>。 <br />
+<strong>输出4：</strong>点击div3（粉色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>、<code class="highlighter-rouge">div1</code>、<code class="highlighter-rouge">div2</code>、<code class="highlighter-rouge">div3</code>。</p>
+</blockquote>
+
+<p>  <strong>解读上述输出结果：</strong><br />
+  是的，正如你所见，事件捕获与事件冒泡完全相反，在捕获模式中，出发一个元素监听时，先找到这个元素的根祖先元素，触发这个祖先元素的事件，然后再逐级触发子元素的事件，直到当前元素为止，即捕获模式的方向是：<strong>从祖先元素到自己</strong>。</p>
+
+<h3 id="section-5"><strong>五、冒泡与捕获同时存在，执行顺序是怎样的？</strong></h3>
+<p>  首先我们明确一点就是：<strong>浏览器优先处理捕获事件</strong>，当冒泡与捕获同时存在的时候，浏览器先把当前元素层级中的捕获事件拿出来，按照捕获的顺序进行响应，随后再按照冒泡的顺序进行冒泡事件响应，我们把刚才的事件绑定改为如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>div0.addEventListener("click",div0Handler,true);// div0为捕获模式
+div1.addEventListener("click",div1Handler,false);// div1为冒泡模式
+div2.addEventListener("click",div2Handler,true);// div2为捕获模式
+div3.addEventListener("click",div3Handler,false);// div3为冒泡模式
+</code></pre>
+</div>
+
+<p>输出结果如下：</p>
+
+<blockquote>
+  <p><strong>输出1：</strong>点击div0（灰色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出2：</strong>点击div1（橙色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>、<code class="highlighter-rouge">div1</code>。 <br />
+<strong>输出3：</strong>点击div2（蓝色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>、<code class="highlighter-rouge">div2</code>、<code class="highlighter-rouge">div1</code>。 <br />
+<strong>输出4：</strong>点击div3（粉色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>、<code class="highlighter-rouge">div2</code>、<code class="highlighter-rouge">div3</code>、<code class="highlighter-rouge">div1</code>。</p>
+</blockquote>
+
+<p>  <strong>解读上述输出结果：</strong><br /></p>
+
+<blockquote>
+  <p><strong>输出1：</strong>div0为捕获，祖先元素无监听事件，只输出div0。 <br />
+<strong>输出2：</strong>div1是冒泡模式，它的祖先元素div0是捕获模式，优先处理捕获，输出div0，然后输出div1。 <br />
+<strong>输出3：</strong>读取当前层级：div2是捕获，祖先div1是冒泡，祖先div0是捕获，优先处理捕获，捕获的方向是：胸祖先到自己，所以输出：div0、div2，最后处理冒泡，输出div1。<br />
+<strong>输出4：</strong>读取当前层级：div3是冒泡，祖先div2是捕获，祖先div1是冒泡，祖先div0是捕获，
+先处理捕获，捕获是祖先到自己，输出了：div0、div2，随后处理冒泡，冒泡是从自己到祖先，所以先输出自己，即div3，扩散（冒泡）给div1，div1输出。</p>
+</blockquote>
+
+<h3 id="section-6"><strong>六、如何去阻止冒泡和捕获的这种事件传播？</strong></h3>
+<p>我们用stopPropagation（）方法阻止事件传播，我们把之间的监听事件全部改为冒泡模式，并且在每一个回调函数中阻止事件传播，修改之前代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>div0.addEventListener("click",div0Handler,false);
+div1.addEventListener("click",div1Handler,false);
+div2.addEventListener("click",div2Handler,false);
+div3.addEventListener("click",div3Handler,false);
+
+function div0Handler(e){
+    e.stopPropagation();
+    console.log("div0")
+}
+function div1Handler(e){
+    e.stopPropagation();
+    console.log("div1")
+}
+function div2Handler(e){
+    e.stopPropagation();
+    console.log("div2")
+}
+function div3Handler(e){
+    e.stopPropagation();
+    console.log("div3")
+}  输出结果如下：
+</code></pre>
+</div>
+
+<blockquote>
+  <p><strong>输出1：</strong>点击div0（灰色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出2：</strong>点击div1（橙色的），控制台先后输出为：<code class="highlighter-rouge">div1</code>。<br />
+<strong>输出3：</strong>点击div2（蓝色的），控制台先后输出为：<code class="highlighter-rouge">div2</code>。  <br />
+<strong>输出4：</strong>点击div3（粉色的），控制台先后输出为：<code class="highlighter-rouge">div3</code>。</p>
+</blockquote>
+
+<p>  <strong>解读上述输出结果：</strong><br />
+因为所有的都是冒泡模式，方向是从自己到祖先元素，输出自己后，紧接着阻止了事件传播，所以就达到了点击谁，就输出谁，没有任何传播。那么如果把上述的冒泡全部改为捕获呢？我们尝试一下，修改代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>div0.addEventListener("click",div0Handler,true);
+div1.addEventListener("click",div1Handler,true);
+div2.addEventListener("click",div2Handler,true);
+div3.addEventListener("click",div3Handler,true);
+
+function div0Handler(e){
+    e.stopPropagation();
+    console.log("div0")
+}
+function div1Handler(e){
+    e.stopPropagation();
+    console.log("div1")
+}
+function div2Handler(e){
+    e.stopPropagation();
+    console.log("div2")
+}
+function div3Handler(e){
+    e.stopPropagation();
+    console.log("div3")
+}  输出结果如下：
+</code></pre>
+</div>
+
+<blockquote>
+  <p><strong>输出1：</strong>点击div0（灰色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。 <br />
+<strong>输出2：</strong>点击div1（橙色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。<br />
+<strong>输出3：</strong>点击div2（蓝色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。  <br />
+<strong>输出4：</strong>点击div3（粉色的），控制台先后输出为：<code class="highlighter-rouge">div0</code>。</p>
+</blockquote>
+
+<p>  <strong>解读上述输出结果：</strong><br />
+因为所有的都是捕获模式，方向是从祖元素先到自己，无论点击谁，都先读取层级关系，都会找到祖先元素div0，然后都走div0的回调函数，但是div0的回调函数中，阻止了事件的传播。在执行了div0的回调函数后，一切都停止了，所以点击每个div都会输出div0。</p>
+
+<h3 id="section-7"><strong>七、总结</strong></h3>
+
+<blockquote>
+  <p><strong>1.冒泡模式：</strong>先读取DOM层级关系，方向：从自己到祖先元素，浏览器默认采用这种方式处理。<br />
+<strong>2.捕获模式：</strong>先读取DOM层级关系，方向：从祖先元素到自己。<br />
+<strong>3.冒泡与捕获同时存在：</strong>先读取DOM层级关系，优先捕获事件处理，随后处理冒泡事件。<br />
+<strong>4.最后一个参数：</strong>为了最好的兼容性，最后一个参数尽量不为空，最好写上true还是fasle</p>
+</blockquote>
+
+  </section>
+  
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <!--<div class="pay_explain">扫码打赏，你说多少就多少</div>-->
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝/微信</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:300px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 25px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+/*              background: url('/images/payimg/cy-reward-title-bg.jpg');*/
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:0px;cursor:pointer;height:40px;width:500px;margin-left:100px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2016/09/web%E8%AF%B7%E6%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B7%B3%E8%BD%AC%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B7%B3%E8%BD%AC/" data-toggle="tooltip" data-placement="top" title="web请求的服务器跳转和客户端跳转">上一篇：  <span>web请求的服务器跳转和客户端跳转</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2018/05/demo/" data-toggle="tooltip" data-placement="top" title="demo">下一篇：  <span>demo</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+  <!--高速版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cyt8xz1NE',
+conf: 'prod_6ad660aaba524170a3fd84204e22200c'
+});
+</script>
+</article>
+
+<!--<section class="post-comments">
+
+
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+      url: document.location.href, 
+      sourceId: "",
+      productKey: "aa395cf7778f458492060f3f53301b7c",
+      target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
+
+
+  
+</section>
+-->
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/tianyu5177" title="@tianyu5177 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/Tianyu5177" title="@Tianyu5177 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+
+          <!-- RSS -->
+          <!--<li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>-->
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:zhangtianyu5177@sina.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <!--<div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; Tianyu 2018 Theme by <a href="http://baixin.io/">leopardpan</a> |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

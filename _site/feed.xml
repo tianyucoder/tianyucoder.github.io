@@ -2,12 +2,310 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tianyu</title>
-    <description>欢迎来到我的个人站</description>
+    <description>欢迎来到我的一亩三分地。</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 29 Aug 2017 17:52:34 +0800</pubDate>
-    <lastBuildDate>Tue, 29 Aug 2017 17:52:34 +0800</lastBuildDate>
+    <pubDate>Thu, 10 May 2018 20:32:50 +0800</pubDate>
+    <lastBuildDate>Thu, 10 May 2018 20:32:50 +0800</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>demo</title>
+        <description>
+</description>
+        <pubDate>Thu, 10 May 2018 00:00:00 +0800</pubDate>
+        <link>/2018/05/demo/</link>
+        <guid isPermaLink="true">/2018/05/demo/</guid>
+        
+        <category>JS技术</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>JS中addEventListener的事件捕获、事件冒泡</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;概要：&lt;/h2&gt;
+&lt;p&gt;  addEventListener()函数是最常用的用来为指定的dom元素动态绑定事件,在最近在addEventListener这个方法上踩了一个小坑，所以在这里仔细的总结一下这个方法，希望对各位小伙伴有帮助。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;&lt;strong&gt;一、基本形式及参数：&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;  addEventListener()有三个参数，具体如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;addEventListener(type,listener,useCapture);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;参数说明：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;type：&lt;/strong&gt;监听事件的类型，如：click、load… 等等。&lt;br /&gt;
+&lt;strong&gt;listener：&lt;/strong&gt;执行监听事件的函数名称。&lt;br /&gt;
+&lt;strong&gt;useCapture：&lt;/strong&gt; 是否采用捕获模式,&lt;strong&gt;fasle&lt;/strong&gt;:冒泡模式；&lt;strong&gt;true&lt;/strong&gt;:捕获模式。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;&lt;strong&gt;二、比较常用的方式：&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;  例如给一个按钮增加监听方法，这样我们点击id为button0的元素时，控制台就会输出“hello”。	&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;button id=&quot;button0&quot;&amp;gt;按钮0&amp;lt;/button&amp;gt;
+
+var btn = document.getElementById(&quot;button0&quot;);
+
+btn.addEventListener(&quot;click&quot;,btnHandler);
+
+function btnHandler(){
+    console.log(&quot;hello&quot;)// 处理逻辑
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;&lt;strong&gt;三、冒泡模式&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;  接下来我们就围绕第三个参数来探讨问题，为了更清晰的解释问题，我们先写一个嵌套的四个div，HTML和CSS如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &amp;lt;style&amp;gt;
+    #div0{
+        width: 200px;
+        height: 200px;
+        background-color: gray;
+    }
+    #div1{
+        width: 160px;
+        height: 160px;
+        background-color: orange;
+    }
+    #div2{
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+    #div3{
+        width: 60px;
+        height: 60px;
+        background-color: pink;
+    }
+&amp;lt;/style&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  
+&amp;lt;div id=&quot;div0&quot;&amp;gt;
+  &amp;lt;div id=&quot;div1&quot;&amp;gt;
+    &amp;lt;div id=&quot;div2&quot;&amp;gt;
+        &amp;lt;div id=&quot;div3&quot;&amp;gt;
+            
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;/body&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;  浏览器展示效果如下图（为方便观察，我在每个div上加了文字说明）：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://oi5hiw2r7.bkt.clouddn.com/div.png?imageMogr2/thumbnail/300x400&amp;gt;/blur/1x0/quality/100&quot; alt=&quot;网页展示&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;  当前结构的3D侧视图如下：(由内到外分别为：div0、div1、div2、div3)div0是根div元素。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://oi5hiw2r7.bkt.clouddn.com/div3D.png?imageMogr2/thumbnail/300x400&amp;gt;/blur/1x0/quality/100&quot; alt=&quot;3D展示&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;  接下来我们给每一个div都绑定监听方法，让点击当前div时，控制台输出当前div名称，所有的useCapture都设置为fasle，使用冒泡模式，JS代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; // 获取每个div的DOM对象。
+ var div0 = document.getElementById(&quot;div0&quot;)
+var div1 = document.getElementById(&quot;div1&quot;)
+var div2 = document.getElementById(&quot;div2&quot;)
+var div3 = document.getElementById(&quot;div3&quot;)
+ // 给每个div增加监听事件。
+div0.addEventListener(&quot;click&quot;,div0Handler,false);
+div1.addEventListener(&quot;click&quot;,div1Handler,false);
+div2.addEventListener(&quot;click&quot;,div2Handler,false);
+div3.addEventListener(&quot;click&quot;,div3Handler,false);
+ // div0的回调函数
+function div0Handler(e){
+    e=e || window.event;
+    console.log(&quot;div0&quot;)
+}
+// div1的回调函数
+function div1Handler(e){
+    e=e || window.event;
+    console.log(&quot;div1&quot;)
+}
+// div2的回调函数
+function div2Handler(e){
+    e=e || window.event;
+    console.log(&quot;div2&quot;)
+}
+// div3的回调函数
+function div3Handler(e){
+    e=e || window.event;
+    console.log(&quot;div3&quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;  下面我们开始观察结果：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;输出1：&lt;/strong&gt;点击div0（灰色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出2：&lt;/strong&gt;点击div1（橙色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出3：&lt;/strong&gt;点击div2（蓝色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出4：&lt;/strong&gt;点击div3（粉色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div3&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;  &lt;strong&gt;解读上述输出结果：&lt;/strong&gt;&lt;br /&gt;
+  
+输出1不难理解，点击div0即输出当前的“div0”，那么输出2怎么解释呢？&lt;br /&gt;我们可以这样去理解输出2：
+当点击div0时，div0的监听的回调函数会正常输出“div0”，但是输出之后事情并没有结束，&lt;strong&gt;因为此时方法的useCapture为fale，即当前为冒泡模式，所以点击div1之后，事件会向它的祖先元素(div1)扩散，由于祖先元素也绑定了监听事件，所以祖先素对应的监听函数也执行了&lt;/strong&gt;，所以输出了“div1”，这就是&lt;strong&gt;冒泡模式&lt;/strong&gt;，理解了输出2，所以也就不难理解输出3、输出4了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;冒泡模式总结：&lt;/strong&gt;&lt;br /&gt;
+  冒泡模式的“冒泡”，可以理解为：从当前元素触发监听事件后，向自己的祖先元素一层一层扩散（冒泡），一层一层的祖先素都会响应自己的监听函数,直到DOM的根元素，即冒泡模式的方向是：从自己到祖先元素。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;&lt;strong&gt;四、捕获模式&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;还是刚才的代码，我们开启你捕获模式，把事件监听部分代码改为如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 给每个div增加监听事件，这次为捕获模式，全部为true。
+div0.addEventListener(&quot;click&quot;,div0Handler,true);
+div1.addEventListener(&quot;click&quot;,div1Handler,true);
+div2.addEventListener(&quot;click&quot;,div2Handler,true);
+div3.addEventListener(&quot;click&quot;,div3Handler,true);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;  接下来观察输出结果：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;输出1：&lt;/strong&gt;点击div0（灰色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出2：&lt;/strong&gt;点击div1（橙色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出3：&lt;/strong&gt;点击div2（蓝色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出4：&lt;/strong&gt;点击div3（粉色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div3&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;  &lt;strong&gt;解读上述输出结果：&lt;/strong&gt;&lt;br /&gt;
+  是的，正如你所见，事件捕获与事件冒泡完全相反，在捕获模式中，出发一个元素监听时，先找到这个元素的根祖先元素，触发这个祖先元素的事件，然后再逐级触发子元素的事件，直到当前元素为止，即捕获模式的方向是：&lt;strong&gt;从祖先元素到自己&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;&lt;strong&gt;五、冒泡与捕获同时存在，执行顺序是怎样的？&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;  首先我们明确一点就是：&lt;strong&gt;浏览器优先处理捕获事件&lt;/strong&gt;，当冒泡与捕获同时存在的时候，浏览器先把当前元素层级中的捕获事件拿出来，按照捕获的顺序进行响应，随后再按照冒泡的顺序进行冒泡事件响应，我们把刚才的事件绑定改为如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;div0.addEventListener(&quot;click&quot;,div0Handler,true);// div0为捕获模式
+div1.addEventListener(&quot;click&quot;,div1Handler,false);// div1为冒泡模式
+div2.addEventListener(&quot;click&quot;,div2Handler,true);// div2为捕获模式
+div3.addEventListener(&quot;click&quot;,div3Handler,false);// div3为冒泡模式
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;输出结果如下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;输出1：&lt;/strong&gt;点击div0（灰色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出2：&lt;/strong&gt;点击div1（橙色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出3：&lt;/strong&gt;点击div2（蓝色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出4：&lt;/strong&gt;点击div3（粉色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div3&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;  &lt;strong&gt;解读上述输出结果：&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;输出1：&lt;/strong&gt;div0为捕获，祖先元素无监听事件，只输出div0。 &lt;br /&gt;
+&lt;strong&gt;输出2：&lt;/strong&gt;div1是冒泡模式，它的祖先元素div0是捕获模式，优先处理捕获，输出div0，然后输出div1。 &lt;br /&gt;
+&lt;strong&gt;输出3：&lt;/strong&gt;读取当前层级：div2是捕获，祖先div1是冒泡，祖先div0是捕获，优先处理捕获，捕获的方向是：胸祖先到自己，所以输出：div0、div2，最后处理冒泡，输出div1。&lt;br /&gt;
+&lt;strong&gt;输出4：&lt;/strong&gt;读取当前层级：div3是冒泡，祖先div2是捕获，祖先div1是冒泡，祖先div0是捕获，
+先处理捕获，捕获是祖先到自己，输出了：div0、div2，随后处理冒泡，冒泡是从自己到祖先，所以先输出自己，即div3，扩散（冒泡）给div1，div1输出。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;&lt;strong&gt;六、如何去阻止冒泡和捕获的这种事件传播？&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;我们用stopPropagation（）方法阻止事件传播，我们把之间的监听事件全部改为冒泡模式，并且在每一个回调函数中阻止事件传播，修改之前代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;div0.addEventListener(&quot;click&quot;,div0Handler,false);
+div1.addEventListener(&quot;click&quot;,div1Handler,false);
+div2.addEventListener(&quot;click&quot;,div2Handler,false);
+div3.addEventListener(&quot;click&quot;,div3Handler,false);
+
+function div0Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div0&quot;)
+}
+function div1Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div1&quot;)
+}
+function div2Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div2&quot;)
+}
+function div3Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div3&quot;)
+}  输出结果如下：
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;输出1：&lt;/strong&gt;点击div0（灰色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出2：&lt;/strong&gt;点击div1（橙色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div1&lt;/code&gt;。&lt;br /&gt;
+&lt;strong&gt;输出3：&lt;/strong&gt;点击div2（蓝色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div2&lt;/code&gt;。  &lt;br /&gt;
+&lt;strong&gt;输出4：&lt;/strong&gt;点击div3（粉色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div3&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;  &lt;strong&gt;解读上述输出结果：&lt;/strong&gt;&lt;br /&gt;
+因为所有的都是冒泡模式，方向是从自己到祖先元素，输出自己后，紧接着阻止了事件传播，所以就达到了点击谁，就输出谁，没有任何传播。那么如果把上述的冒泡全部改为捕获呢？我们尝试一下，修改代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;div0.addEventListener(&quot;click&quot;,div0Handler,true);
+div1.addEventListener(&quot;click&quot;,div1Handler,true);
+div2.addEventListener(&quot;click&quot;,div2Handler,true);
+div3.addEventListener(&quot;click&quot;,div3Handler,true);
+
+function div0Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div0&quot;)
+}
+function div1Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div1&quot;)
+}
+function div2Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div2&quot;)
+}
+function div3Handler(e){
+    e.stopPropagation();
+    console.log(&quot;div3&quot;)
+}  输出结果如下：
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;输出1：&lt;/strong&gt;点击div0（灰色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。 &lt;br /&gt;
+&lt;strong&gt;输出2：&lt;/strong&gt;点击div1（橙色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。&lt;br /&gt;
+&lt;strong&gt;输出3：&lt;/strong&gt;点击div2（蓝色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。  &lt;br /&gt;
+&lt;strong&gt;输出4：&lt;/strong&gt;点击div3（粉色的），控制台先后输出为：&lt;code class=&quot;highlighter-rouge&quot;&gt;div0&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;  &lt;strong&gt;解读上述输出结果：&lt;/strong&gt;&lt;br /&gt;
+因为所有的都是捕获模式，方向是从祖元素先到自己，无论点击谁，都先读取层级关系，都会找到祖先元素div0，然后都走div0的回调函数，但是div0的回调函数中，阻止了事件的传播。在执行了div0的回调函数后，一切都停止了，所以点击每个div都会输出div0。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;&lt;strong&gt;七、总结&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;1.冒泡模式：&lt;/strong&gt;先读取DOM层级关系，方向：从自己到祖先元素，浏览器默认采用这种方式处理。&lt;br /&gt;
+&lt;strong&gt;2.捕获模式：&lt;/strong&gt;先读取DOM层级关系，方向：从祖先元素到自己。&lt;br /&gt;
+&lt;strong&gt;3.冒泡与捕获同时存在：&lt;/strong&gt;先读取DOM层级关系，优先捕获事件处理，随后处理冒泡事件。&lt;br /&gt;
+&lt;strong&gt;4.最后一个参数：&lt;/strong&gt;为了最好的兼容性，最后一个参数尽量不为空，最好写上true还是fasle&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Thu, 10 May 2018 00:00:00 +0800</pubDate>
+        <link>/2018/05/JS%E4%B8%ADaddEventListener%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7-%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1/</link>
+        <guid isPermaLink="true">/2018/05/JS%E4%B8%ADaddEventListener%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7-%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1/</guid>
+        
+        <category>JS技术</category>
+        
+        
+      </item>
     
       <item>
         <title>web请求的服务器跳转和客户端跳转</title>
@@ -132,235 +430,10 @@
 
 </description>
         <pubDate>Sun, 25 Sep 2016 00:00:00 +0800</pubDate>
-        <link>/2016/09/%E5%85%B3%E4%BA%8EJSP%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%BC%8F/</link>
-        <guid isPermaLink="true">/2016/09/%E5%85%B3%E4%BA%8EJSP%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%BC%8F/</guid>
+        <link>/2016/09/web%E8%AF%B7%E6%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B7%B3%E8%BD%AC%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B7%B3%E8%BD%AC/</link>
+        <guid isPermaLink="true">/2016/09/web%E8%AF%B7%E6%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B7%B3%E8%BD%AC%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B7%B3%E8%BD%AC/</guid>
         
         <category>JSP技术</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>HEXO搭建个人博客</title>
-        <description>&lt;p&gt;　　经过各种找资料，踩过各种坑，终于使用 hexo 搭建个人博客初步完成了，域名目前用得时 github 的，我的 hexo 是 3.1.1 版本，hexo 不同的版本，很多配置都不一样。好吧，废话不多说了，开始吧。&lt;/p&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;正文：&lt;/h2&gt;
-&lt;p&gt;之前是想着写博客，一方面是给自己做笔记，可以提升自己的写作、总结能力，一个技术点我们会使用，并不难，但是要做到让让别人也能听懂我们讲得，还是需要一定的技巧和经验的。很多类似于CSDN、博客园也都可以写文章，但是页面的样式我，不是太喜欢，简书还算好点得。最近看到一些大神们的博客（在我的友情链接里有），貌似都是用hexo写得，我也依葫芦画瓢的搭建了一个。不罗嗦了，直接上搭建步骤。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;配置环境&lt;/h2&gt;
-
-&lt;h3 id=&quot;node&quot;&gt;安装Node（必须）&lt;/h3&gt;
-
-&lt;p&gt;作用：用来生成静态页面的
-到Node.js&lt;a href=&quot;https://nodejs.org/&quot;&gt;官网&lt;/a&gt;下载相应平台的最新版本，一路安装即可。&lt;/p&gt;
-
-&lt;h3 id=&quot;git&quot;&gt;安装Git（必须）&lt;/h3&gt;
-&lt;p&gt;作用：把本地的hexo内容提交到github上去.
-安装Xcode就自带有Git，我就不多说了。&lt;/p&gt;
-
-&lt;h3 id=&quot;github&quot;&gt;申请GitHub（必须）&lt;/h3&gt;
-&lt;p&gt;作用：是用来做博客的远程创库、域名、服务器之类的，怎么与本地hexo建立连接等下讲。
-&lt;a href=&quot;https://github.com/&quot;&gt;github&lt;/a&gt;账号我也不再啰嗦了,没有的话直接申请就行了，跟一般的注册账号差不多，SSH Keys，看你自己了，可以不配制，不配置的话以后每次对自己的博客有改动提交的时候就要手动输入账号密码，配置了就不需要了，怎么配置我就不多说了，网上有很多教程。&lt;/p&gt;
-
-&lt;h3 id=&quot;hexo&quot;&gt;正式安装HEXO　&lt;/h3&gt;
-&lt;p&gt;Node和Git都安装好后，可执行如下命令安装hexo：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo npm install -g hexo
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;section-2&quot;&gt;初始化&lt;/h3&gt;
-&lt;p&gt;创建一个文件夹，如：Blog，cd到Blog里执行hexo init的。命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo init
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;好啦，至此，全部安装工作已经完成！&lt;/p&gt;
-
-&lt;h3 id=&quot;section-3&quot;&gt;生成静态页面&lt;/h3&gt;
-&lt;p&gt;继续再Blog目录下执行如下命令，生成静态页面&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo generate （hexo g  也可以）   
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;section-4&quot;&gt;本地启动&lt;/h3&gt;
-&lt;p&gt;启动本地服务，进行文章预览调试，命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo server   
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;浏览器输入&lt;a href=&quot;就可以看到最原始的效果了&quot;&gt;http://localhost:4000&lt;/a&gt;
-我不知道你们能不能，反正我不能，因为我还有环境没配置好&lt;/p&gt;
-
-&lt;h3 id=&quot;hexo-1&quot;&gt;常见的HEXO配置错误：&lt;/h3&gt;
-
-&lt;p&gt;```
-ERROR Plugin load failed: hexo-server&lt;/p&gt;
-
-&lt;p&gt;原因： Besides, utilities are separated into a standalone module. hexo.util is not reachable anymore.&lt;/p&gt;
-
-&lt;p&gt;解决方法，执行命令：$ sudo npm install hexo-server&lt;/p&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;```
-执行命令hexo server，提示：Usage: hexo&lt;command /&gt; ….&lt;/p&gt;
-
-&lt;p&gt;原因：我认为是没有生成本地服务&lt;/p&gt;
-
-&lt;p&gt;解决方法，执行命令：$ npm install hexo-server –save&lt;/p&gt;
-
-&lt;p&gt;提示：hexo-server@0.1.2 node_modules/hexo-server
-….&lt;/p&gt;
-
-&lt;p&gt;表示成功了&lt;a href=&quot;https://hexo.io/zh-cn/docs/server.html&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;这个时候再执行：$ hexo-server&lt;/p&gt;
-
-&lt;p&gt;得到: INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.&lt;/p&gt;
-
-&lt;p&gt;这个时候再点击&lt;a href=&quot;http://0.0.0.0:4000&quot;&gt;http://0.0.0.0:4000&lt;/a&gt;，正常情况下应该是最原始的画面，但是我看到的是：
-白板和Cannot GET /   几个字
-原因： 由于2.6以后就更新了，我们需要手动配置些东西，我们需要输入下面三行命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install hexo-renderer-ejs --save
-npm install hexo-renderer-stylus --save
-npm install hexo-renderer-marked --save
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这个时候再重新生成静态文件，命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo generate （或hexo g）
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;启动本地服务器：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo server （或hexo s）
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;再点击网址&lt;a href=&quot;http://0.0.0.0:4000&quot;&gt;http://0.0.0.0:4000&lt;/a&gt; OK终于可以看到属于你自己的blog啦，?，虽然很简陋，但好歹有了一个属于自己的小窝了。&lt;a href=&quot;https://disqus.com/home/discussion/bsspirit/hexogithubweb/&quot;&gt;参考链接&lt;/a&gt;，本地已经简单的设置好了，但是现在域名和服务器都是基于自己的电脑，接下来需要跟github进行关联。&lt;/p&gt;
-
-&lt;h2 id=&quot;github-1&quot;&gt;配置Github&lt;/h2&gt;
-
-&lt;h3 id=&quot;repository&quot;&gt;建立Repository&lt;/h3&gt;
-
-&lt;p&gt;建立与你用户名对应的仓库，仓库名必须为【your_user_name.github.io】，固定写法
-然后建立关联，我的Blog在本地/Users/leopard/Blog，Blog是我之前建的东西也全在这里面，有：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Blog      &lt;br /&gt;
-　｜      &lt;br /&gt;
-　｜－－ _config.yml     &lt;br /&gt;
-　｜－－ node_modules    &lt;br /&gt;
-　｜－－ public              &lt;br /&gt;
-　｜－－ source                                                &lt;br /&gt;
-　｜－－ db.json	        &lt;br /&gt;
-　｜－－ package.json        &lt;br /&gt;
-　｜－－ scaffolds        &lt;br /&gt;
-　｜－－ themes          　　　　　
-　　　&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;现在我们需要_config.yml文件，来建立关联，命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim _config.yml
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;翻到最下面，改成我这样子的，注意： &lt;code class=&quot;highlighter-rouge&quot;&gt;: 后面要有空格&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;deploy:
-  type: git
-  repository: https://github.com/leopardpan/leopardpan.github.io.git
-  branch: master
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;执行如下命令才能使用git部署&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install hexo-deployer-git --save
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;网上会有很多说法，有的type是github, 还有repository 最后面的后缀也不一样，是github.com.git，我也踩了很多坑，我现在的版本是hexo: 3.1.1，执行命令hexo -vsersion就出来了,貌似3.0后全部改成我上面这种格式了。
-忘了说了，我没用SSH Keys如果你用了SSH Keys的话直接在github里复制SSH的就行了，总共就两种协议，相信你懂的。
-然后，执行配置命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo deploy
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;　然后再浏览器中输入&lt;a href=&quot;http://leopardpan.github.io/&quot;&gt;http://leopardpan.github.io/&lt;/a&gt;就行了，我的 github 的账户叫 leopardpan ,把这个改成你 github 的账户名就行了&lt;/p&gt;
-
-&lt;h3 id=&quot;section-5&quot;&gt;部署步骤&lt;/h3&gt;
-
-&lt;p&gt;每次部署的步骤，可按以下三步来进行。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo clean
-hexo generate
-hexo deploy
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;一些常用命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo new &quot;postName&quot; #新建文章
-hexo new page &quot;pageName&quot; #新建页面
-hexo generate #生成静态页面至public目录
-hexo server #开启预览访问端口（默认端口4000，&#39;ctrl + c&#39;关闭server）
-hexo deploy #将.deploy目录部署到GitHub
-hexo help  #查看帮助
-hexo version  #查看Hexo的版本
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这里有大量的&lt;a href=&quot;https://github.com/hexojs/hexo/wiki/Themes&quot;&gt;主题列表&lt;/a&gt;使用方法里面
-都有详细的介绍，我就不多说了。    &lt;br /&gt;
-我这里有几款个人认为不错的主题，免去你们，一个一个的选了，欢迎吐槽我的审美，?       &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/daisygao/hexo-themes-cover&quot;&gt;Cover&lt;/a&gt; - A chic theme with facebook-like cover photo    &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/henryhuang/oishi&quot;&gt;Oishi&lt;/a&gt; - A white theme based on Landscape plus and Writing.    &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/hardywu/hexo-theme-sidebar&quot;&gt;Sidebar&lt;/a&gt; - Another theme based on Light with a simple sidebar  &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/SuperKieran/TKL&quot;&gt;TKL&lt;/a&gt; - A responsive design theme for Hexo. 一个设计优雅的响应式主题  &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/levonlin/Tinnypp&quot;&gt;Tinnypp&lt;/a&gt; - A clean, simple theme based on Tinny   &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/yunlzheng/hexo-themes-writing&quot;&gt;Writing&lt;/a&gt; - A small and simple hexo theme based on Light   &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/litten/hexo-theme-yilia&quot;&gt;Yilia&lt;/a&gt; - Responsive and simple style 优雅简洁响应式主题，我用得就是这个。  &lt;br /&gt;
-　&lt;a href=&quot;https://github.com/Voidly/pacman&quot;&gt;Pacman voidy&lt;/a&gt; - A theme with dynamic tagcloud and dynamic snow&lt;/p&gt;
-
-&lt;h3 id=&quot;section-6&quot;&gt;一些基本路径&lt;/h3&gt;
-&lt;p&gt;　文章在 source/_posts，编辑器可以用 Sublime，支持 markdown 语法。如果想修改头像可以直接在主题的 _config.yml 文件里面修改，友情链接，之类的都在这里，修改名字在 public/index.html 里修改，开始打理你的博客吧，有什么问题或者建议，都可以提出来，我会继续完善的。&lt;/p&gt;
-
-&lt;p&gt;Markdown语法参考链接: &lt;a href=&quot;https://www.zybuluo.com/mdeditor&quot;&gt;作业部落&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;问：如何让文章想只显示一部分和一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;阅读全文&lt;/code&gt; 的按钮？     &lt;br /&gt;
-答：在文章中加一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;!--more--&amp;gt;&lt;/code&gt; ， &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;!--more--&amp;gt;&lt;/code&gt; 后面的内容就不会显示出来了。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;问：本地部署成功了，也能预览效果，但使用 username.github.io 访问，&lt;code class=&quot;highlighter-rouge&quot;&gt;出现 404 &lt;/code&gt; .    &lt;br /&gt;
-答：首先确认 hexo d 命令执行是否报错，如果没有报错，再查看一下你的 github 的 username.github.io 仓库，你的博客是否已经成功提交了，你的 github 邮箱也要通过验证才行。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt; &lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 25 Aug 2015 00:00:00 +0800</pubDate>
-        <link>/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
-        <guid isPermaLink="true">/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
-        
-        <category>博客</category>
         
         
       </item>
