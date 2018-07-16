@@ -496,7 +496,7 @@ img::-moz-selection {
     vertical-align: middle; }
 
   .panel-title {
-    margin: 0 0 5px 0;
+    margin: 0 0 20px 0;
     margin-top: 20px;
     font-size: 1.8em;
     letter-spacing: 4px;
@@ -504,10 +504,10 @@ img::-moz-selection {
 
   .panel-subtitle {
     font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-    font-size: 0.6em;
+    font-size: 1em;
     font-weight: lighter;
     letter-spacing: 3px;
-    color: #CCCCCC;
+    /*color: #CCCCCC;*/
     -webkit-font-smoothing: antialiased; }
 
   .panel-cover {
@@ -533,8 +533,8 @@ img::-moz-selection {
     bottom: 0;
     left: 0;
     background-color: rgba(68, 68, 68, 0.6);
-    background-image: -webkit-linear-gradient(-410deg, rgba(68, 68, 68, 0.6) 20%, rgba(0, 0, 0, 0.9));
-    background-image: linear-gradient(140deg,rgba(68, 68, 68, 0.6) 20%, rgba(0, 0, 0, 0.9)); }
+    background-image: -webkit-linear-gradient(-410deg, rgba(68, 68, 68, 0.6) 10%, rgba(0, 0, 0, 0.9));
+    background-image: linear-gradient(180deg,rgba(68, 68, 68, 0.3) 20%, rgba(0, 0, 0, 0.9)); }
 
   .panel-cover__logo {
     margin-bottom: .2em; }
@@ -545,7 +545,7 @@ img::-moz-selection {
   .panel-cover__divider {
     width: 50%;
     margin: 20px auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.14); }
+    border-top: 1px solid rgba(255, 255, 255, 0.5); }
 
   .panel-cover__divider--secondary {
     width: 15%; }
@@ -719,6 +719,7 @@ img::-moz-selection {
     font-size: .6em;
     text-shadow: none;
     color: #BF1827;
+    /*color: white*/
   }
   .navigation__item {
     display: inline-block;
@@ -731,8 +732,10 @@ img::-moz-selection {
     position: relative;
     width: 100%;
     border-color: #666;
-    color: #666;
-    /*opacity: .8; */
+    color: gray;
+    font-size: 0.7rem;
+    font-weight: bold;
+    opacity: 1; 
   }
 
   .navigation__item a:hover {

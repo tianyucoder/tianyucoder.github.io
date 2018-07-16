@@ -1,6 +1,6 @@
 # Basic
 title: Tianyu
-subtitle: 技术没有尽头，抱着热爱学习的心面对生活。
+subtitle: 技术没有尽头，爱生活，爱学习。
 description: 欢迎来到我的一亩三分地。
 # 头像里面的标题
 avatarTitle: Tian yu
@@ -53,7 +53,7 @@ blog_button:
     title: 博客主页
 
 # Navigation buttons in the front page.s
-nav:
+nav:   
     - {title: 所有文章, description: archive, url: '/archive'}   
     - {title: 标签, description: tags, url: '/tags'}      
     - {title: 关于我, description: about, url: '/about'}      
@@ -63,6 +63,6 @@ nav:
 gems: [jekyll-paginate]
 paginate: 20
 paginate_path: "page/:num/"
-
+markdown: redcarpet
 
 
