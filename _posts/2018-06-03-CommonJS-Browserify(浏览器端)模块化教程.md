@@ -84,7 +84,4 @@ tag: JS模块化
 **4. 打包处理js:**
 
 * 第一步，合并模块： ```browserify js/src/app.js -o js/dist/bundle.js ```
-* 第二步，页面引入：
-  ```
-  <script type="text/javascript" src="js/dist/bundle.js"></script> 
-  ```
+* 第二步，页面引入：```<script type="text/javascript" src="js/dist/bundle.js"></script> ```
