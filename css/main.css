@@ -341,7 +341,10 @@ img::-moz-selection {
   }
 
   .excerpt {
-    border-left: 3px solid #458B74; 
+    border-left: 5px solid #458B74;
+    border-image: -webkit-linear-gradient( red,blue) 30 30;
+    border-image: -moz-linear-gradient( red, blue) 30 30;
+    border-image: linear-gradient( red,blue) 30 30;
     margin: 0;
     margin-right: 10px;
     font-size: .9em;

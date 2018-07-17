@@ -68,11 +68,11 @@ tag: JS模块化
         
      */
     "use strict";//启用严格模式
-    //引用模块
+    //引用自定义模块
     let module1 = require('./modules/module1')
     let module2 = require('./modules/module2')
     let module3 = require('./modules/module3')
-    
+    //引用第三方模块
     let uniq = require('uniq')
     let fs = require('fs')
     
