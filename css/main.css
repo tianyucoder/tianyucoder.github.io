@@ -348,7 +348,7 @@ img::-moz-selection {
     margin: 0;
     margin-right: 10px;
     font-size: .9em;
-    background-color: #FFF;
+    background-color: #0a0a0a0f;
     text-indent: 10px;
     color: #4F4F4F; 
   }
@@ -860,7 +860,7 @@ img::-moz-selection {
     line-height: 1.3em;
   }
   .post-list__post-title a {
-   color: #333333; 
+   color: #005fa9; 
    padding-top: 5px;
    padding-left: 10px;
   }
