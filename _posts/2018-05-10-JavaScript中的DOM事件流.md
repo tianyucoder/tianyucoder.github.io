@@ -3,7 +3,7 @@ layout: post
 title: "JavaScript中的DOM事件流"
 date: 2018-05-10 
 description: "JavaScript，前端，JS绑定事件"
-tag: JS技术 
+tag: JavaScript 
 ---   
 
 ## 概要：
