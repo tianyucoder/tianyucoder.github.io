@@ -66,3 +66,5 @@ paginate_path: "page/:num/"
 # markdown: redcarpet
 
 
+
+theme: jekyll-theme-cayman
